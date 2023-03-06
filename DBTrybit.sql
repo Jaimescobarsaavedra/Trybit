@@ -1,0 +1,18 @@
+CREATE DATABASE trybit;
+USE trybit;
+CREATE TABLE usuarios
+(
+    id VARCHAR(255) NOT NULL UNIQUE,
+    nombre VARCHAR(255) NOT NULL,
+    correo VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    rol VARCHAR(255) NOT NULL,
+    fecha_registro DATETIME NOT NULL,
+    estado TINYINT NOT NULL,
+    PRIMARY KEY (id)
+);
+CREATE TABLE rol
+(
+    id_rol VARCHAR(255) NOT NULL UNIQUE,
+    roles VARCHAR (255) NOT NULL
+);

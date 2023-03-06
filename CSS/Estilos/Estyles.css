@@ -1,0 +1,11 @@
+.navbar{
+    background: #012970 !important;
+    --bs-navbar-color: whitesmoke;
+    --bs-navbar-hover-color: rgba(219, 213, 255, 0.904);
+    --bs-navbar-brand-color: whitesmoke;
+    --bs-navbar-brand-hover-color: rgba(219, 213, 255, 0.904);
+}
+
+.body{
+    color: #012970;
+}
