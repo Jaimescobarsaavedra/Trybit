@@ -12,6 +12,7 @@ define('RUTA_REG_CORRECTO', SERVIDOR.'/RegistroCorrecto.php');
 define('RUTA_LOGIN', SERVIDOR.'/InicioSesion.php');
 define('RUTA_OLVIDO', SERVIDOR.'/OlvidastePassword.php');
 define('RUTA_TRYBIT', SERVIDOR.'/Trybit.php');
+define('RUTA_CERRAR_SESION', SERVIDOR);
 
 
 

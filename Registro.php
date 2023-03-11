@@ -14,7 +14,7 @@ if (isset($_POST['enviar'])) {
         $_POST['password2']
     );
     $usuario = new Usuario('', $_POST['nombre'], $_POST['correo'],
-    password_hash($_POST['password'], PASSWORD_DEFAULT),'', '', '', '');
+    password_hash($_POST['password'], PASSWORD_DEFAULT),'', '', '');
     $id = md5(password_hash(rand(0, 100000), PASSWORD_DEFAULT));
     $usuario_insertado = RepoUsuario :: Insertar_usuario(conexion ::obtener_conexion(), $usuario, $id);
 
@@ -69,7 +69,7 @@ if (isset($_POST['enviar'])) {
                         <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
 
                             <div class="d-flex justify-content-center py-4">
-                                <a href="index.html" class="logo d-flex align-items-center w-auto">
+                                <a href="index.php" class="logo d-flex align-items-center w-auto">
                                     <img src="assets/img/logo.png" alt="">
                                     <span class="d-none d-lg-block">Trybit</span>
                                 </a>
