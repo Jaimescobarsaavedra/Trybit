@@ -1,20 +1,8 @@
 <?php
 
-use JetBrains\PhpStorm\Internal\ReturnTypeContract;
-
 class validadorRegistro{
     #Variables
-    private $nombre;
-    private $correo;
-
-    private $aviso_inicio;
-    private $aviso_cierre;
-    private $password;
-
-    private $error_nombre;
-    private $error_correo;
-    private $error_password;
-    private $error_password2;
+    private $nombre, $correo, $aviso_inicio, $aviso_cierre, $password, $error_nombre, $error_correo, $error_password, $error_password2;
     
     #Constructor
     public function __construct($nombre, $correo, $password, $password2)

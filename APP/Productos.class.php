@@ -2,10 +2,12 @@
 
 class Productos{
 
-    private $id_producto, $nombre, $referencia, $descripcion, $cantidad, $precio, $fecha_entrada, $vencimiento;
-    public function __construct($id_producto, $nombre, $referencia, $descripcion, $cantidad, $precio, $fecha_entrada, $vencimiento)
+    private $id_producto, $NIT, $id_contactos, $nombre, $referencia, $descripcion, $cantidad, $precio, $fecha_entrada, $vencimiento;
+    public function __construct($id_producto, $NIT, $id_contactos, $nombre, $referencia, $descripcion, $cantidad, $precio, $fecha_entrada, $vencimiento)
     {
         $this->id_producto = $id_producto;
+        $this->NIT = $NIT;
+        $this->id_contactos = $id_contactos;
         $this->nombre = $nombre;
         $this->referencia = $referencia;
         $this->descripcion = $descripcion;
@@ -14,9 +16,18 @@ class Productos{
         $this->fecha_entrada = $fecha_entrada;
         $this->vencimiento = $vencimiento;
     }
+
     public function getIdProducto()
     {
         return $this->id_producto;
+    }
+    public function getNIT()
+    {
+        return $this->NIT;
+    }
+    public function getIdContactos()
+    {
+        return $this->id_contactos;
     }
     public function getNombre()
     {
@@ -46,6 +57,11 @@ class Productos{
     {
         return $this->vencimiento;
     }
+
+    public function setIdContactos($id_contactos): void
+    {
+        $this->id_contactos = $id_contactos;
+    }
     public function setNombre($nombre): void
     {
         $this->nombre = $nombre;
@@ -66,7 +82,10 @@ class Productos{
     {
         $this->precio = $precio;
     }
+    public function setVencimiento($vencimiento): void
+    {
+        $this->vencimiento = $vencimiento;
+    }
+
 
 }
-
-?>

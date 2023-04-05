@@ -2,36 +2,27 @@
 
 class Ventas{
 
-    private $id_venta, $id_producto, $fecha, $cantidad, $total, $modo_pago, $estatus, $num_pago;
+    private $id_venta, $NIT, $id_producto, $cantidad, $fecha, $total, $modo_pago, $estatus, $num_pago;
 
-    /**
-     * @param $id_venta
-     * @param $id_producto
-     * @param $fecha
-     * @param $cantidad
-     * @param $total
-     * @param $modo_pago
-     * @param $estatus
-     * @param $num_pago
-     */
-    public function __construct($id_venta, $id_producto, $fecha, $cantidad, $total, $modo_pago, $estatus, $num_pago)
+    public function __construct($id_venta, $NIT, $id_producto, $cantidad, $fecha, $total, $modo_pago, $estatus, $num_pago)
     {
         $this->id_venta = $id_venta;
+        $this->NIT = $NIT;
         $this->id_producto = $id_producto;
-        $this->fecha = $fecha;
         $this->cantidad = $cantidad;
+        $this->fecha = $fecha;
         $this->total = $total;
         $this->modo_pago = $modo_pago;
         $this->estatus = $estatus;
         $this->num_pago = $num_pago;
     }
-    public function getFecha()
-    {
-        return $this->fecha;
-    }
     public function getIdVenta()
     {
         return $this->id_venta;
+    }
+    public function getNIT()
+    {
+        return $this->NIT;
     }
     public function getIdProducto()
     {
@@ -40,6 +31,10 @@ class Ventas{
     public function getCantidad()
     {
         return $this->cantidad;
+    }
+    public function getFecha()
+    {
+        return $this->fecha;
     }
     public function getTotal()
     {
@@ -57,6 +52,7 @@ class Ventas{
     {
         return $this->num_pago;
     }
+
     public function setCantidad($cantidad): void
     {
         $this->cantidad = $cantidad;
@@ -73,6 +69,9 @@ class Ventas{
     {
         $this->estatus = $estatus;
     }
+
+
+
 }
 
 ?>

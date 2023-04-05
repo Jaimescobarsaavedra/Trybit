@@ -20,8 +20,8 @@ if (isset($_POST['login'])) {
     if ($validador-> obtener_error() === '' &&
         !is_null($validador -> obtener_usuario())) {
         #iniciar Sesion
-        ControlSesion ::Iniciar_sesion($validador -> obtener_usuario() -> obtener_id(),
-                                        $validador->obtener_usuario()->obtener_nombre());
+        ControlSesion ::Iniciar_sesion($validador -> obtener_usuario() ->getNIT(),
+                                        $validador->obtener_usuario() ->getRazonSocial());
         #redirigir a Trybit
         Redireccion :: redirigir(RUTA_TRYBIT);
     }else {

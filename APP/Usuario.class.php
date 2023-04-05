@@ -1,61 +1,53 @@
 <?php
 class Usuario
 {
-    private $id, $nombre, $correo, $contrasena, $rol, $fecha_registro, $activo;
+    private $NIT, $razon_social, $correo, $password, $fecha_registro, $estado;
 
-    public function __construct($id, $nombre, $correo, $contrasena, $rol, $fecha_registro, $activo)
+    public function __construct($NIT, $razon_social, $correo, $password, $fecha_registro, $estado)
     {
-        $this-> id = $id;
-        $this-> nombre = $nombre;
-        $this-> correo = $correo;
-        $this-> contrasena = $contrasena;
-        $this-> rol = $rol;
-        $this-> fecha_registro = $fecha_registro;
-        $this-> activo = $activo;
+        $this->NIT = $NIT;
+        $this->razon_social = $razon_social;
+        $this->correo = $correo;
+        $this->password = $password;
+        $this->fecha_registro = $fecha_registro;
+        $this->estado = $estado;
     }
-    #Getters
-    public function obtener_id ()
+    public function getNIT()
     {
-        return $this-> id;
+        return $this->NIT;
     }
-    public function obtener_nombre()
+    public function getRazonSocial()
     {
-        return $this->nombre;
+        return $this->razon_social;
     }
-    public function obtener_correo()
+    public function getCorreo()
     {
         return $this->correo;
     }
-    public function obtener_contrasena()
+    public function getPassword()
     {
-        return $this->contrasena;
+        return $this->password;
     }
-    public function obtener_rol()
+    public function getFechaRegistro()
     {
-        return $this->rol;
-    }
-    public function obtener_fecha_registro(){
         return $this->fecha_registro;
     }
-    public function obtener_estado()
+    public function getEstado()
     {
-        return $this->activo;
+        return $this->estado;
     }
-    #Setters
-    public function cambiar_nombre($nombre)
+
+    public function setRazonSocial($razon_social): void
     {
-        $this-> nombre = $nombre;
+        $this->razon_social = $razon_social;
     }
-    public function cambiar_correo($correo)
+    public function setCorreo($correo): void
     {
         $this->correo = $correo;
     }
-    public function cambiar_contrasena($contrasena)
+    public function setPassword($password): void
     {
-        $this->contrasena = $contrasena;
+        $this->password = $password;
     }
-    public function cambiar_rol($rol)
-    {
-        $this->rol = $rol;
-    }
+
 }

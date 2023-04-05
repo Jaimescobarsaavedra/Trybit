@@ -4,7 +4,7 @@ class Redireccion
 {
     public static function redirigir($url)
     {
-        header('Location:' . $url. '?' . true . 301);
+        header('Location:' . $url. '?' );
         exit();
     }
     

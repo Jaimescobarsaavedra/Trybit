@@ -1,7 +1,13 @@
 <div class="col-12">
-    <label for="yourName" class="form-label">Tú nombre</label>
+    <label for="yourName" class="form-label">Tú razón social</label>
     <input type="text" name="nombre" class="form-control" id="yourName" required>
-    <div class="invalid-feedback">No digitaste tu nombre, hazlo en la casilla de arriba.</div>
+    <div class="invalid-feedback">No digitaste tu razón social, hazlo en la casilla de arriba.</div>
+</div>
+
+<div class="col-12">
+    <label for="yourEmail" class="form-label">Tú NIT</label>
+    <input type="text" name="NIT" class="form-control" id="yourNIT" required>
+    <div class="invalid-feedback">No digitaste tu NIT, hazlo en la casilla de arriba.</div>
 </div>
 
 <div class="col-12">

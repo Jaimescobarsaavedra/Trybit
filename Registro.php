@@ -8,22 +8,22 @@ include_once 'APP/Redireccion.inc.php';
 if (isset($_POST['enviar'])) {
     conexion ::abrir_conexion();
     $validador = new validadorRegistro(
+        $_POST['NIT'],
         $_POST['nombre'],
         $_POST['correo'],
         $_POST['password'],
         $_POST['password2']
     );
-    $usuario = new Usuario('', $_POST['nombre'], $_POST['correo'],
+    $usuario = new Usuario($_POST['NIT'], $_POST['nombre'], $_POST['correo'],
     password_hash($_POST['password'], PASSWORD_DEFAULT),'', '', '');
     $id = md5(password_hash(rand(0, 100000), PASSWORD_DEFAULT));
-    $usuario_insertado = RepoUsuario :: Insertar_usuario(conexion ::obtener_conexion(), $usuario, $id);
+    $usuario_insertado = RepoUsuario :: Insertar_usuario(conexion ::obtener_conexion(), $usuario);
 
     if ($usuario_insertado) {
-            Redireccion :: redirigir(RUTA_REG_CORRECTO .'?nombre='. $usuario->obtener_nombre());
+            Redireccion :: redirigir(RUTA_REG_CORRECTO .'?nombre='. $usuario -> getRazonSocial());
     }
     conexion ::cerrar_conexion();
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="es">
