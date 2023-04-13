@@ -28,17 +28,17 @@ class RepoUsuario
         if (isset($conexion)) {
             try {
                 $sql = "INSERT INTO trybit.usuarios(NIT, razon_social, correo, password, fecha_registro, estado)
-                VALUES(:NIT , :razon_social, :correo, :password,NOW(), 0)";
+                VALUES(:NIT , :razon_social, :correo, :password, NOW(), 0)";
 
                 $sentencia = $conexion-> prepare($sql);
 
-                $NIT = $usuario->getNIT();
+                $NIT_temp = $usuario->getNIT();
                 $nombre_temp = $usuario->getRazonSocial();
                 $correo_temp = $usuario->getCorreo();
                 $password_temp = $usuario->getPassword();
 
-                $sentencia-> bindParam(':NIT', $NIT, PDO::PARAM_STR);
-                $sentencia -> bindParam (':nombre', $nombre_temp, PDO::PARAM_STR);
+                $sentencia -> bindParam(':NIT', $NIT_temp, PDO::PARAM_STR);
+                $sentencia -> bindParam (':razon_social', $nombre_temp, PDO::PARAM_STR);
                 $sentencia -> bindParam(':correo', $correo_temp, PDO::PARAM_STR);
                 $sentencia -> bindParam(':password', $password_temp, PDO::PARAM_STR);
 
@@ -66,11 +66,11 @@ class RepoUsuario
 
                 if (!empty($resultado)) {
                     $usuario = new Usuario($resultado['NIT'],
-                    $resultado['razon_social'],
+                    $resultado['Razon_social'],
                     $resultado['correo'],
                     $resultado['password'],
                     $resultado['fecha_registro'],
-                    $resultado['estado'],);
+                    $resultado['estado']);
                 }
             } catch (PDOException $ex) {
                 print 'ERROR' .$ex -> getMessage();

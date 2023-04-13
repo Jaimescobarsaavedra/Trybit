@@ -21,11 +21,11 @@
                         <h5 class="card-title">Agregar Productos</h5>
 
                         <!-- General Form Elements -->
-                        <form>
+                        <form role="form" method="post" action="<?php echo $_SERVER['PHP_SELF'] ?>" novalidat>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">Proveedor</label>
                                 <div class="col-sm-10">
-                                    <select class="form-select" aria-label="Default select example">
+                                    <select class="form-select" name="proveedor_producto" aria-label="Default select example">
                                         <option selected>Seleccione Proveedor</option>
                                         <option value="1">One</option>
                                         <option value="2">Two</option>
@@ -36,43 +36,43 @@
                             <div class="row mb-3">
                                 <label for="inputText" class="col-sm-2 col-form-label">Nombre</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control">
+                                    <input type="text" name="nombre_producto" class="form-control">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="inputText" class="col-sm-2 col-form-label">Referencia</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control">
+                                    <input type="text" name="referencia_producto" class="form-control">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="inputPassword" class="col-sm-2 col-form-label">Descripción</label>
                                 <div class="col-sm-10">
-                                    <textarea class="form-control" style="height: 100px"></textarea>
+                                    <textarea class="form-control" name="descripcion_producto" style="height: 100px"></textarea>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="inputNumber" class="col-sm-2 col-form-label">Cantidad</label>
                                 <div class="col-sm-10">
-                                    <input type="number" class="form-control">
+                                    <input type="number" name="cantidad_producto" class="form-control">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="inputNumber" class="col-sm-2 col-form-label">Valor $</label>
                                 <div class="col-sm-10">
-                                    <input type="number" class="form-control">
+                                    <input type="number" name="valor_producto" class="form-control">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="inputDate" class="col-sm-2 col-form-label">Fecha Entrada</label>
                                 <div class="col-sm-10">
-                                    <input type="date" class="form-control">
+                                    <input type="date" name="fecha_entrada_producto" class="form-control">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="inputDate" class="col-sm-2 col-form-label">Fecha Vencimiento</label>
                                 <div class="col-sm-10">
-                                    <input type="date" class="form-control">
+                                    <input type="date" name="vencimiento_producto" class="form-control">
                                 </div>
                             </div>
                             <div class="row mb-3">

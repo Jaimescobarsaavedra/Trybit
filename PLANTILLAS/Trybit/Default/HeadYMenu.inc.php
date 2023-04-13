@@ -1,56 +1,84 @@
 <?php
 include_once 'APP/ControlSesion.inc.php';
+include_once 'APP/Redireccion.inc.php';
 include_once 'APP/config.inc.php';
 include_once 'APP/Conexion.inc.php';
 include_once 'APP/Compras.class.php';
+include_once 'APP/Contabilidad.class.php';
+include_once 'APP/Contactos.class.php';
+include_once 'APP/Gastos.class.php';
+include_once 'APP/Productos.class.php';
+include_once 'APP/Ventas.class.php';
+include_once 'APP/RepoCompras.inc.php';
+include_once 'APP/RepoContabilidad.inc.php';
+include_once 'APP/RepoContactos.inc.php';
+include_once 'APP/RepoGastos.inc.php';
+include_once 'APP/RepoProductos.inc.php';
+include_once 'APP/RepoVentas.inc.php';
 
 session_start();
-if (isset($_POST['enviar_AGRProducto'])){
+if (isset($_POST['enviar_default'])){
+    Redireccion::redirigir(RUTA_TRYBIT);
+}elseif (isset($_POST['enviar_AGRProducto'])){
     conexion::abrir_conexion();
     $id = md5(password_hash(rand(0, 100000), PASSWORD_DEFAULT));
-    $producto = new Productos($_POST['proveedor'],$_POST['nombre'], $_POST['referencia'], $_POST['descripcion'], $_POST['cantidad'], $_POST['precio'],$_POST['fecha_entrada'], $_POST['vencimiento']);
-    $producto_insertado = RepoProductos::insetar_producto(conexion::obtener_conexion(), $_SESSION['NIT'], $producto, $id);
+    $producto = new Productos($id,$_SESSION['NIT'],$_POST['proveedor_producto'],$_POST['nombre_producto'], $_POST['referencia_producto'], $_POST['descripcion_producto'], $_POST['cantidad_producto'], $_POST['valor_producto'],$_POST['fecha_entrada_producto'], $_POST['vencimiento_producto']);
+    $producto_insertado = RepoProductos::insetar_producto(conexion::obtener_conexion(), $producto);
 
     if ($producto_insertado){
-        Redireccion:: redirigir(SERVIDOR.'?name=producto-insertado-correctamente');
+        Redireccion:: redirigir(RUTA_TRYBIT);
     }
     conexion::cerrar_conexion();
 }elseif (isset($_POST['enviar_AGRContactos'])){
     conexion::abrir_conexion();
     $id = md5(password_hash(rand(0, 100000), PASSWORD_DEFAULT));
-    $contacto = new Contactos($_POST['producto'], $_POST['nombre'], $_POST['telefono'],$_POST['proveedor']);
-    $contacto_insertado = RepoContactos::insertar_contacto(conexion::obtener_conexion(),$_SESSION['NIT'], $contacto, $id);
+    $contacto = new Contactos($id,$_SESSION['NIT'], $_POST['nombre_contacto'], $_POST['telefono_Contacto']);
+    $contacto_insertado = RepoContactos::insertar_contacto(conexion::obtener_conexion(), $contacto);
 
     if ($contacto_insertado){
-        Redireccion::redirigir(SERVIDOR.'?name=contacto-insertado-correctamente');
+        Redireccion::redirigir(RUTA_TRYBIT);
     }
     conexion::cerrar_conexion();
 }elseif (isset($_POST['enviar_AGRCompras'])) {
     conexion ::abrir_conexion();
     $id = md5(password_hash(rand(0, 100000), PASSWORD_DEFAULT));
-    $compra = new Compras( $_POST['proveedor'], $_POST['producto'], $_POST['valor'], $_POST['cantidad'], $_POST['fecha_compra']);
-    $compra_insertada = RepoCompras :: Insertar_compra(conexion ::obtener_conexion(), $_SESSION['NIT'], $compra, $id);
+    $compra = new Compras($id,$_SESSION['NIT'], $_POST['proveedor_compra'], $_POST['producto_compra'], $_POST['valor_compra'], $_POST['cantidad_compra'], $_POST['fecha_compra']);
+    $compra_insertada = RepoCompras :: insertar_compra(conexion ::obtener_conexion(), $compra);
 
     if ($compra_insertada) {
-        Redireccion :: redirigir(SERVIDOR .'?name=compra-insertada-correctamente');
+        Redireccion :: redirigir(RUTA_TRYBIT);
     }
     conexion ::cerrar_conexion();
 }elseif (isset($_POST['enviar_AGRGastos'])){
     conexion::abrir_conexion();
     $id = md5(password_hash(rand(0, 100000), PASSWORD_DEFAULT));
-    $gasto =new Gastos($_POST['fecha_gasto'], $_POST['concepto'], $_POST['valor'], $_POST['categoria']);
-    $gasto_insertado = RepoGastos::insertar_gasto(conexion::obtener_conexion(), $_SESSION['NIT'], $gasto, $id);
+    $gasto =new Gastos($id,$_SESSION['NIT'],$_POST['fecha_gasto'], $_POST['concepto_gasto'], $_POST['valor_gasto'], $_POST['categoria_gasto']);
+    $gasto_insertado = RepoGastos::insertar_gasto(conexion::obtener_conexion(), $gasto);
 
     if ($gasto_insertado){
-        Redireccion::redirigir(SERVIDOR.'name=gasto-insertado.correctamente');
+        Redireccion::redirigir(RUTA_TRYBIT);
     }
 }elseif (isset($_POST['enviar_AGRVentas'])){
     conexion::abrir_conexion();
     $id = md5(password_hash(rand(0, 100000), PASSWORD_DEFAULT));
     $num_pago = md5(password_hash(rand(0, 100000), PASSWORD_DEFAULT));
-    $venta = new Ventas($_POST['producto'],$_POST['cantidad'], $_POST['fecha'], $_POST['modo_pago'],$_POST['estatus']);
-    $venta_insertada = RepoVentas::insetar_ventas(conexion::obtener_conexion(), $_SESSION['NIT'],$venta, $id, $num_pago);
+    $venta = new Ventas($id,$_SESSION['NIT'], $_POST['producto_venta'], $_POST['cantidad_venta'], $_POST['fecha_venta'],'', $_POST['modo_pago_venta'],$_POST['estatus_venta'],$num_pago);
+    $venta_insertada = RepoVentas::insetar_ventas(conexion::obtener_conexion(),$venta);
+
+    if ($venta_insertada){
+        Redireccion::redirigir(RUTA_TRYBIT);
+    }
+}elseif (isset($_POST['enviar_logout'])) {
+    conexion::abrir_conexion();
+    $validador = ControlSesion::Sesion_iniciada();
+    if (isset($validador)){
+        ControlSesion::Cerrar_sesion();
+        Redireccion::redirigir(SERVIDOR);
+    }else{
+    }
+    conexion::cerrar_conexion();
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -95,8 +123,7 @@ if (isset($_POST['enviar_AGRProducto'])){
 
     <div class="d-flex align-items-center justify-content-between">
         <a href="<?php SERVIDOR?>" class="logo d-flex align-items-center">
-            <img src="" alt="">
-            <span class="d-none d-lg-block">Trybit</span>
+            <img src="FONTS/Images/Logo%20TRYBIT%20azul.png" alt="">
         </a>
         <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -307,7 +334,7 @@ if (isset($_POST['enviar_AGRProducto'])){
                     </li>
 
                     <li>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
+                        <a class="dropdown-item d-flex align-items-center" href="<?php SERVIDOR?>?name=enviar_logout">
                             <i class="bi bi-box-arrow-right"></i>
                             <span>Cerrar sesión</span>
                         </a>
@@ -327,7 +354,7 @@ if (isset($_POST['enviar_AGRProducto'])){
     <ul class="sidebar-nav" id="sidebar-nav">
 
         <li class="nav-item">
-            <a class="nav-link " href="<?php SERVIDOR?>?name=">
+            <a class="nav-link " href="<?php SERVIDOR?>?name=enviar_default">
                 <i class="bi bi-grid"></i>
                 <span>Trybit</span>
             </a>

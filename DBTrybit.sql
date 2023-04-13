@@ -52,17 +52,11 @@ CREATE TABLE contactos
 (
     id_contacto VARCHAR(255) NOT NULL,
     NIT VARCHAR(255) NOT NULL,
-    id_productos VARCHAR(255) NOT NULL,
     nombre VARCHAR(255) NOT NULL,
     telefono INT(255) NOT NULL,
-    proveedor BOOLEAN NOT NULL,
     CONSTRAINT UN_id_contacto UNIQUE (id_contacto),
     CONSTRAINT UN_telefono UNIQUE (telefono),
     PRIMARY KEY (id_contacto),
-    FOREIGN KEY (id_productos)
-        REFERENCES productos(id_producto)
-        ON UPDATE CASCADE
-        ON DELETE RESTRICT,
     FOREIGN KEY (NIT)
         REFERENCES usuarios(NIT)
         ON UPDATE CASCADE

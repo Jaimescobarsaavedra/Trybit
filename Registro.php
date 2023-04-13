@@ -15,7 +15,7 @@ if (isset($_POST['enviar'])) {
         $_POST['password2']
     );
     $usuario = new Usuario($_POST['NIT'], $_POST['nombre'], $_POST['correo'],
-    password_hash($_POST['password'], PASSWORD_DEFAULT),'', '', '');
+    password_hash($_POST['password'], PASSWORD_DEFAULT),'', '');
     $id = md5(password_hash(rand(0, 100000), PASSWORD_DEFAULT));
     $usuario_insertado = RepoUsuario :: Insertar_usuario(conexion ::obtener_conexion(), $usuario);
 

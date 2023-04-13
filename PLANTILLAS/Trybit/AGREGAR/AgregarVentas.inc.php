@@ -21,14 +21,14 @@
                         <h5 class="card-title">Agregar Ventas</h5>
 
                         <!-- General Form Elements -->
-                        <form>
+                        <form role="form" method="post" action="<?php echo $_SERVER['PHP_SELF'] ?>" novalidat>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">Producto</label>
                                 <div class="col-sm-10">
-                                    <select class="form-select" aria-label="Default select example">
+                                    <select class="form-select" name="producto_venta" aria-label="Default select example">
                                         <option selected>Seleccione Producto</option>
                                         <option value="1">One</option>
-                                        <option value="2">Two</option>
+                                        <option value="02dad74d8ee47c86c1b9acc44bbdcee2">Two</option>
                                         <option value="3">Three</option>
                                     </select>
                                 </div>
@@ -36,35 +36,35 @@
                             <div class="row mb-3">
                                 <label for="inputNumber" class="col-sm-2 col-form-label">Cantidad</label>
                                 <div class="col-sm-10">
-                                    <input type="number" class="form-control">
+                                    <input type="number" name="cantidad_venta" class="form-control">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="inputDate" class="col-sm-2 col-form-label">fecha</label>
                                 <div class="col-sm-10">
-                                    <input type="date" class="form-control">
+                                    <input type="date" name="fecha_venta" class="form-control">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">Modo Pago</label>
                                 <div class="col-sm-10">
-                                    <select class="form-select" aria-label="Default select example">
+                                    <select class="form-select" name="modo_pago_venta" aria-label="Default select example">
                                         <option selected>Seleccione Modo Pago</option>
-                                        <option value="1">Crédito</option>
-                                        <option value="2">Débito</option>
-                                        <option value="3">Efectivo</option>
+                                        <option value="Crédito">Crédito</option>
+                                        <option value="Débito">Débito</option>
+                                        <option value="Efectivo">Efectivo</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">Estatus</label>
                                 <div class="col-sm-10">
-                                    <select class="form-select" aria-label="Default select example">
+                                    <select class="form-select" name="estatus_venta" aria-label="Default select example">
                                         <option selected>Seleccione Estatus</option>
-                                        <option value="1">Aprovado</option>
-                                        <option value="2">En revisión</option>
-                                        <option value="3">Denegado</option>
-                                        <option value="4">Cancelado</option>
+                                        <option value="Aprovado">Aprovado</option>
+                                        <option value="En revisión">En revisión</option>
+                                        <option value="Denegado">Denegado</option>
+                                        <option value="Cancelado">Cancelado</option>
                                     </select>
                                 </div>
                             </div>

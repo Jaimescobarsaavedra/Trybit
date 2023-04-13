@@ -2,16 +2,14 @@
 
 class Contactos{
 
-    private $id_contacto, $NIT, $id_productos, $nombre, $telefono, $proveedor;
+    private $id_contacto, $NIT, $nombre, $telefono;
 
-    public function __construct($id_contacto, $NIT, $id_productos, $nombre, $telefono, $proveedor)
+    public function __construct($id_contacto, $NIT, $nombre, $telefono)
     {
         $this->id_contacto = $id_contacto;
         $this->NIT = $NIT;
-        $this->id_productos = $id_productos;
         $this->nombre = $nombre;
         $this->telefono = $telefono;
-        $this->proveedor = $proveedor;
     }
 
     public function getIdContacto()
@@ -22,10 +20,6 @@ class Contactos{
     {
         return $this->NIT;
     }
-    public function getIdProductos()
-    {
-        return $this->id_productos;
-    }
     public function getNombre()
     {
         return $this->nombre;
@@ -34,15 +28,7 @@ class Contactos{
     {
         return $this->telefono;
     }
-    public function getProveedor()
-    {
-        return $this->proveedor;
-    }
 
-    public function setIdProductos($id_productos): void
-    {
-        $this->id_productos = $id_productos;
-    }
     public function setNombre($nombre): void
     {
         $this->nombre = $nombre;
@@ -51,10 +37,7 @@ class Contactos{
     {
         $this->telefono = $telefono;
     }
-    public function setProveedor($proveedor): void
-    {
-        $this->proveedor = $proveedor;
-    }
+
 
 
 }

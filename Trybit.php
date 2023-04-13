@@ -51,6 +51,8 @@ do{
             include_once 'PLANTILLAS/Trybit/REPORTE/VerProductos.inc.php';
         }elseif ($Modulo == 'VerVentas'){
             include_once 'PLANTILLAS/Trybit/REPORTE/VerVentas.inc.php';
+        }elseif ($Modulo == ''){
+            include_once 'PLANTILLAS/Trybit/Default/MainDefault.inc.php';
         }
     }else{
         include_once 'PLANTILLAS/Trybit/Default/MainDefault.inc.php';

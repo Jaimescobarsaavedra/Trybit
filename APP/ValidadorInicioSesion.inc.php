@@ -3,8 +3,7 @@ include_once 'RepoUsuario.inc.php';
 
 class validadorInicioSesion
 {
-    private $usuario;
-    private $error;
+    private $usuario, $error;
 
     public function __construct($correo, $password, $conexion)
     {
@@ -14,7 +13,7 @@ class validadorInicioSesion
             $this-> error = "debes introducir tu correo y tu contraseña";
         }else {
             $this->usuario = RepoUsuario :: obtener_usuario_por_email($conexion, $correo);
-            if (is_null($this->usuario)|| !password_verify($password, $this->usuario->obtener_contrasena())) {
+            if (is_null($this->usuario)|| !password_verify($password, $this->usuario->getPassword())) {
                 $this->error = "datos incorrectos";
             }
         }

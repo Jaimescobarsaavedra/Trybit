@@ -21,29 +21,29 @@
                         <h5 class="card-title">Agregar Gastos</h5>
 
                         <!-- General Form Elements -->
-                        <form>
+                        <form role="form" method="post" action="<?php echo $_SERVER['PHP_SELF'] ?>" novalidat>
                             <div class="row mb-3">
                                 <label for="inputDate" class="col-sm-2 col-form-label">Fecha de gasto</label>
                                 <div class="col-sm-10">
-                                    <input type="date" class="form-control">
+                                    <input type="date" name="fecha_gasto" class="form-control">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="inputText" class="col-sm-2 col-form-label">Concepto</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control">
+                                    <input type="text" name="concepto_gasto" class="form-control">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="inputNumber" class="col-sm-2 col-form-label">Valor $</label>
                                 <div class="col-sm-10">
-                                    <input type="number" class="form-control">
+                                    <input type="number" name="valor_gasto" class="form-control">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="inputText" class="col-sm-2 col-form-label">Categoria</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control">
+                                    <input type="text" name="categoria_gasto" class="form-control">
                                 </div>
                             </div>
                             <div class="row mb-3">

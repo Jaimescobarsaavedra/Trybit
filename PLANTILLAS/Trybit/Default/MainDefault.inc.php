@@ -4,7 +4,10 @@
         <h1>Trybit</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="<?php SERVIDOR?>.name=">Home</a></li>
+                <li class="breadcrumb-item"><a href="<?php SERVIDOR?>">Home</a></li>
+                <?php
+                echo $_SESSION['NIT'];
+                ?>
             </ol>
         </nav>
     </div><!-- End Page Title -->
@@ -160,13 +163,13 @@
                                     document.addEventListener("DOMContentLoaded", () => {
                                         new ApexCharts(document.querySelector("#reportsChart"), {
                                             series: [{
-                                                name: 'Sales',
-                                                data: [31, 40, 28, 51, 42, 82, 56],
+                                                name: 'Ventas',
+                                                data: [31, 40, 50, 51, 42, 82, 56],
                                             }, {
                                                 name: 'Ganancias',
                                                 data: [11, 32, 45, 32, 34, 52, 41]
                                             }, {
-                                                name: 'Customers',
+                                                name: 'clientes',
                                                 data: [15, 11, 32, 18, 9, 24, 11]
                                             }],
                                             chart: {
