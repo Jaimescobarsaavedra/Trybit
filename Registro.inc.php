@@ -4,6 +4,11 @@ include_once 'APP/ValidadorRegistro.inc.php';
 include_once 'APP/Usuario.class.php';
 include_once 'APP/RepoUsuario.inc.php';
 include_once 'APP/Redireccion.inc.php';
+include_once 'APP/ControlSesion.inc.php';
+
+if (ControlSesion::sesion_iniciada()) {
+    Redireccion::redirigir(RUTA_TRYBIT);
+}
 
 if (isset($_POST['enviar'])) {
     conexion ::abrir_conexion();
@@ -81,7 +86,7 @@ if (isset($_POST['enviar'])) {
                                         <h5 class="card-title text-center pb-0 fs-4">Crear una cuenta</h5>
                                         <p class="text-center small">Registra tus datos para obtener una cuenta</p>
                                     </div>
-                                    <form class="row g-3 needs-validation" role="form" method="post" action="<?php echo $_SERVER['PHP_SELF'] ?>" novalidate>
+                                    <form class="row g-3 needs-validation" role="form" method="post" action="<?php echo RUTA_REGISTRO ?>" novalidate>
                                         <?php
                                             include_once 'PLANTILLAS/REGISTRO/vacio.inc.php';
                                         ?>

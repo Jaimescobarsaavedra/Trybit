@@ -1,3 +1,13 @@
+<?php
+include_once 'APP/ControlSesion.inc.php';
+include_once 'APP/Redireccion.inc.php';
+include_once 'APP/RepoEscribirDatos.inc.php';
+if (!ControlSesion::sesion_iniciada()) {
+    Redireccion::redirigir(RUTA_LOGIN);
+}
+include_once 'PLANTILLAS/Trybit/Default/HeadYMenu.inc.php';
+
+?>
 <main id="main" class="main">
 
     <div class="pagetitle">
@@ -5,9 +15,6 @@
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="<?php SERVIDOR?>">Home</a></li>
-                <?php
-                echo $_SESSION['NIT'];
-                ?>
             </ol>
         </nav>
     </div><!-- End Page Title -->
@@ -169,7 +176,7 @@
                                                 name: 'Ganancias',
                                                 data: [11, 32, 45, 32, 34, 52, 41]
                                             }, {
-                                                name: 'clientes',
+                                                name: 'Gastos',
                                                 data: [15, 11, 32, 18, 9, 24, 11]
                                             }],
                                             chart: {
@@ -676,3 +683,4 @@
     </section>
 
 </main><!-- End #main -->
+<?php include_once 'PLANTILLAS/Trybit/Default/FooterMenu.inc.php'?>

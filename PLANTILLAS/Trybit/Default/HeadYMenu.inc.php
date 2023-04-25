@@ -15,12 +15,12 @@ include_once 'APP/RepoContactos.inc.php';
 include_once 'APP/RepoGastos.inc.php';
 include_once 'APP/RepoProductos.inc.php';
 include_once 'APP/RepoVentas.inc.php';
+include_once 'APP/RepoEscribirDatos.inc.php';
 
-session_start();
+conexion::abrir_conexion();
 if (isset($_POST['enviar_default'])){
     Redireccion::redirigir(RUTA_TRYBIT);
 }elseif (isset($_POST['enviar_AGRProducto'])){
-    conexion::abrir_conexion();
     $id = md5(password_hash(rand(0, 100000), PASSWORD_DEFAULT));
     $producto = new Productos($id,$_SESSION['NIT'],$_POST['proveedor_producto'],$_POST['nombre_producto'], $_POST['referencia_producto'], $_POST['descripcion_producto'], $_POST['cantidad_producto'], $_POST['valor_producto'],$_POST['fecha_entrada_producto'], $_POST['vencimiento_producto']);
     $producto_insertado = RepoProductos::insetar_producto(conexion::obtener_conexion(), $producto);
@@ -28,9 +28,7 @@ if (isset($_POST['enviar_default'])){
     if ($producto_insertado){
         Redireccion:: redirigir(RUTA_TRYBIT);
     }
-    conexion::cerrar_conexion();
 }elseif (isset($_POST['enviar_AGRContactos'])){
-    conexion::abrir_conexion();
     $id = md5(password_hash(rand(0, 100000), PASSWORD_DEFAULT));
     $contacto = new Contactos($id,$_SESSION['NIT'], $_POST['nombre_contacto'], $_POST['telefono_Contacto']);
     $contacto_insertado = RepoContactos::insertar_contacto(conexion::obtener_conexion(), $contacto);
@@ -38,9 +36,7 @@ if (isset($_POST['enviar_default'])){
     if ($contacto_insertado){
         Redireccion::redirigir(RUTA_TRYBIT);
     }
-    conexion::cerrar_conexion();
 }elseif (isset($_POST['enviar_AGRCompras'])) {
-    conexion ::abrir_conexion();
     $id = md5(password_hash(rand(0, 100000), PASSWORD_DEFAULT));
     $compra = new Compras($id,$_SESSION['NIT'], $_POST['proveedor_compra'], $_POST['producto_compra'], $_POST['valor_compra'], $_POST['cantidad_compra'], $_POST['fecha_compra']);
     $compra_insertada = RepoCompras :: insertar_compra(conexion ::obtener_conexion(), $compra);
@@ -48,9 +44,7 @@ if (isset($_POST['enviar_default'])){
     if ($compra_insertada) {
         Redireccion :: redirigir(RUTA_TRYBIT);
     }
-    conexion ::cerrar_conexion();
 }elseif (isset($_POST['enviar_AGRGastos'])){
-    conexion::abrir_conexion();
     $id = md5(password_hash(rand(0, 100000), PASSWORD_DEFAULT));
     $gasto =new Gastos($id,$_SESSION['NIT'],$_POST['fecha_gasto'], $_POST['concepto_gasto'], $_POST['valor_gasto'], $_POST['categoria_gasto']);
     $gasto_insertado = RepoGastos::insertar_gasto(conexion::obtener_conexion(), $gasto);
@@ -59,7 +53,6 @@ if (isset($_POST['enviar_default'])){
         Redireccion::redirigir(RUTA_TRYBIT);
     }
 }elseif (isset($_POST['enviar_AGRVentas'])){
-    conexion::abrir_conexion();
     $id = md5(password_hash(rand(0, 100000), PASSWORD_DEFAULT));
     $num_pago = md5(password_hash(rand(0, 100000), PASSWORD_DEFAULT));
     $venta = new Ventas($id,$_SESSION['NIT'], $_POST['producto_venta'], $_POST['cantidad_venta'], $_POST['fecha_venta'],'', $_POST['modo_pago_venta'],$_POST['estatus_venta'],$num_pago);
@@ -68,15 +61,16 @@ if (isset($_POST['enviar_default'])){
     if ($venta_insertada){
         Redireccion::redirigir(RUTA_TRYBIT);
     }
-}elseif (isset($_POST['enviar_logout'])) {
-    conexion::abrir_conexion();
+}elseif (isset($_POST['editar_EDICompras'])){
+    $compra = [];
+}
+elseif (isset($_POST['enviar_logout'])) {
     $validador = ControlSesion::Sesion_iniciada();
     if (isset($validador)){
         ControlSesion::Cerrar_sesion();
-        Redireccion::redirigir(SERVIDOR);
+        Redireccion::redirigir(RUTA_TRYBIT);
     }else{
     }
-    conexion::cerrar_conexion();
 }
 
 ?>
@@ -122,7 +116,7 @@ if (isset($_POST['enviar_default'])){
 <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-        <a href="<?php SERVIDOR?>" class="logo d-flex align-items-center">
+        <a href="<?php echo RUTA_TRYBIT?>" class="logo d-flex align-items-center">
             <img src="FONTS/Images/Logo%20TRYBIT%20azul.png" alt="">
         </a>
         <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -304,7 +298,7 @@ if (isset($_POST['enviar_default'])){
                     </li>
 
                     <li>
-                        <a class="dropdown-item d-flex align-items-center" href="<?php SERVIDOR?>?name=VerPerfil">
+                        <a class="dropdown-item d-flex align-items-center" href="<?php SERVIDOR?>">
                             <i class="bi bi-person"></i>
                             <span>Mi Perfil</span>
                         </a>
@@ -334,7 +328,7 @@ if (isset($_POST['enviar_default'])){
                     </li>
 
                     <li>
-                        <a class="dropdown-item d-flex align-items-center" href="<?php SERVIDOR?>?name=enviar_logout">
+                        <a class="dropdown-item d-flex align-items-center" href="<?php SERVIDOR?>">
                             <i class="bi bi-box-arrow-right"></i>
                             <span>Cerrar sesión</span>
                         </a>
@@ -354,7 +348,7 @@ if (isset($_POST['enviar_default'])){
     <ul class="sidebar-nav" id="sidebar-nav">
 
         <li class="nav-item">
-            <a class="nav-link " href="<?php SERVIDOR?>?name=enviar_default">
+            <a class="nav-link " href="<?php echo RUTA_TRYBIT?>">
                 <i class="bi bi-grid"></i>
                 <span>Trybit</span>
             </a>
@@ -367,27 +361,27 @@ if (isset($_POST['enviar_default'])){
             </a>
             <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="<?php SERVIDOR?>?name=AgregarCompras">
+                    <a href="<?php echo RUTA_AGREGAR_COMPRAS?>">
                         <i class="bi bi-circle"></i><span>Compras</span>
                     </a>
                 </li>
                 <li>
-                    <a href="<?php SERVIDOR?>?name=AgregarContactos">
+                    <a href="<?php echo RUTA_AGREGAR_CONTACTO?>">
                         <i class="bi bi-circle"></i><span>Contactos</span>
                     </a>
                 </li>
                 <li>
-                    <a href="<?php SERVIDOR?>?name=AgregarGastos">
+                    <a href="<?php echo RUTA_AGREGAR_GASTO?>">
                         <i class="bi bi-circle"></i><span>Gastos</span>
                     </a>
                 </li>
                 <li>
-                    <a href="<?php SERVIDOR?>?name=AgregarProductos">
+                    <a href="<?php  echo RUTA_AGREGAR_PRODUCTOS?>">
                         <i class="bi bi-circle"></i><span>Productos</span>
                     </a>
                 </li>
                 <li>
-                    <a href="<?php SERVIDOR?>?name=AgregarVentas">
+                    <a href="<?php echo  RUTA_AGREGAR_VENTAS?>">
                         <i class="bi bi-circle"></i><span>Ventas</span>
                     </a>
                 </li>
@@ -400,32 +394,32 @@ if (isset($_POST['enviar_default'])){
             </a>
             <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="<?php SERVIDOR?>?name=EditarCompras">
+                    <a href="<?php SERVIDOR?>">
                         <i class="bi bi-circle"></i><span>Compras</span>
                     </a>
                 </li>
                 <li>
-                    <a href="<?php SERVIDOR?>?name=EditarContactos">
+                    <a href="<?php SERVIDOR?>">
                         <i class="bi bi-circle"></i><span>Contactos</span>
                     </a>
                 </li>
                 <li>
-                    <a href="<?php SERVIDOR?>?name=EditarGastos">
+                    <a href="<?php SERVIDOR?>">
                         <i class="bi bi-circle"></i><span>Gastos</span>
                     </a>
                 </li>
                 <li>
-                    <a href="<?php SERVIDOR?>?name=EditarPerfil">
+                    <a href="<?php SERVIDOR?>">
                         <i class="bi bi-circle"></i><span>Perfil</span>
                     </a>
                 </li>
                 <li>
-                    <a href="<?php SERVIDOR?>?name=EditarProductos">
+                    <a href="<?php SERVIDOR?>">
                         <i class="bi bi-circle"></i><span>Productos</span>
                     </a>
                 </li>
                 <li>
-                    <a href="<?php SERVIDOR?>?name=EditarVentas">
+                    <a href="<?php SERVIDOR?>">
                         <i class="bi bi-circle"></i><span>Ventas</span>
                     </a>
                 </li>
@@ -439,27 +433,27 @@ if (isset($_POST['enviar_default'])){
             </a>
             <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="<?php SERVIDOR?>?name=EliminarCompras">
+                    <a href="<?php SERVIDOR?>">
                         <i class="bi bi-circle"></i><span>Compras</span>
                     </a>
                 </li>
                 <li>
-                    <a href="<?php SERVIDOR?>?name=EliminarContactos">
+                    <a href="<?php SERVIDOR?>">
                         <i class="bi bi-circle"></i><span>Contactos</span>
                     </a>
                 </li>
                 <li>
-                    <a href="<?php SERVIDOR?>?name=EliminarGastos">
+                    <a href="<?php SERVIDOR?>">
                         <i class="bi bi-circle"></i><span>Gastos</span>
                     </a>
                 </li>
                 <li>
-                    <a href="<?php SERVIDOR?>?name=EliminarProductos">
+                    <a href="<?php SERVIDOR?>">
                         <i class="bi bi-circle"></i><span>Productos</span>
                     </a>
                 </li>
                 <li>
-                    <a href="<?php SERVIDOR?>?name=EliminarVentas">
+                    <a href="<?php SERVIDOR?>">
                         <i class="bi bi-circle"></i><span>Ventas</span>
                     </a>
                 </li>
@@ -472,32 +466,32 @@ if (isset($_POST['enviar_default'])){
             </a>
             <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="<?php SERVIDOR?>?name=VerCompras">
+                    <a href="<?php echo RUTA_VER_COMPRAS?>">
                         <i class="bi bi-circle"></i><span>Compras</span>
                     </a>
                 </li>
                 <li>
-                    <a href="<?php SERVIDOR?>?name=VerCompras">
+                    <a href="<?php echo RUTA_VER_CONTABILIDAD ?>">
                         <i class="bi bi-circle"></i><span>Contabilidad</span>
                     </a>
                 </li>
                 <li>
-                    <a href="<?php SERVIDOR?>?name=VerContactos">
+                    <a href="<?php echo RUTA_VER_CONTACTOS?>">
                         <i class="bi bi-circle"></i><span>Contactos</span>
                     </a>
                 </li>
                 <li>
-                    <a href="<?php SERVIDOR?>?name=VerGastos">
+                    <a href="<?php echo RUTA_VER_GASTOS?>">
                         <i class="bi bi-circle"></i><span>Gastos</span>
                     </a>
                 </li>
                 <li>
-                    <a href="<?php SERVIDOR?>?name=VerProductos">
+                    <a href="<?php echo RUTA_VER_PRODUCTOS?>">
                         <i class="bi bi-circle"></i><span>Productos</span>
                     </a>
                 </li>
                 <li>
-                    <a href="<?php SERVIDOR?>?name=VerVentas">
+                    <a href="<?php echo RUTA_VER_VENTAS?>">
                         <i class="bi bi-circle"></i><span>Ventas</span>
                     </a>
                 </li>
@@ -507,14 +501,14 @@ if (isset($_POST['enviar_default'])){
         <li class="nav-heading">Paginas</li>
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="<?php SERVIDOR?>?name=VerPerfil">
+            <a class="nav-link collapsed" href="<?php SERVIDOR?>">
                 <i class="bi bi-person"></i>
                 <span>Perfil</span>
             </a>
         </li><!-- End Profile Page Nav -->
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="<?php SERVIDOR?>?name=VerPreguntas">
+            <a class="nav-link collapsed" href="<?php SERVIDOR?>">
                 <i class="bi bi-question-circle"></i>
                 <span>Preguntas Frecuentes</span>
             </a>

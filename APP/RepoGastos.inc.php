@@ -34,4 +34,29 @@ class RepoGastos{
         }
         return $gasto_insertado;
     }
+
+    public static function Obtener_gastos_id($conexion, $NIT)
+    {
+        $gastos = [];
+        if (isset($conexion)){
+            try {
+                $sql = "SELECT * FROM trybit.gastos WHERE NIT = :NIT ";
+
+                $sentencia = $conexion->prepare($sql);
+                $sentencia -> bindParam(':NIT', $NIT, PDO::PARAM_STR);
+                $sentencia -> execute();
+                $resultado = $sentencia -> fetchAll();
+
+                if (count($resultado)){
+                    foreach ($resultado as $fila){
+                        $gastos[] = new Gastos($fila['id_gasto'], $fila['NIT'], $fila['fecha_gasto'], $fila['concepto'], $fila['valor'], $fila['categoria']);
+                    }
+                }
+
+            }catch (PDOException $ex){
+                print 'ERROR' . $ex->getMessage();
+            }
+        }
+        return $gastos;
+    }
 }

@@ -39,5 +39,5 @@
     <button class="btn btn-primary w-100" type="submit" name="enviar">Crear una cuenta</button>
     </div>
     <div class="col-12">
-    <p class="small mb-0"><a href="InicioSesion.php">¿Ya tienes una cuenta?</a></p>
+    <p class="small mb-0"><a href="../../InicioSesion.inc.php">¿Ya tienes una cuenta?</a></p>
 </div>

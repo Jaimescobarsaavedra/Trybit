@@ -25,4 +25,8 @@
 <script src="CSS/assets/js/main.js"></script>
 </body>
 
+<?php
+conexion::cerrar_conexion();
+?>
+
 </html>

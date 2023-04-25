@@ -42,4 +42,76 @@ class RepoProductos{
         }
         return $producto_insertado;
     }
+
+    public static function Obtener_productos_id($conexion, $NIT)
+    {
+        $productos = [];
+        if (isset($conexion)){
+            try {
+                $sql = "SELECT * FROM trybit.productos WHERE NIT = :NIT ";
+
+                $sentencia = $conexion->prepare($sql);
+                $sentencia -> bindParam(':NIT', $NIT, PDO::PARAM_STR);
+                $sentencia -> execute();
+                $resultado = $sentencia -> fetchAll();
+
+                if (count($resultado)){
+                    foreach ($resultado as $fila){
+                        $productos[] = new Productos($fila['id_producto'], $fila['NIT'], $fila['id_contactos'], $fila['nombre'], $fila['referencia'], $fila['descripcion'], $fila['cantidad'], $fila['precio'], $fila['fecha_entrada'], $fila['vencimiento']);
+                    }
+                }
+
+            }catch (PDOException $ex){
+                print 'ERROR' . $ex->getMessage();
+            }
+        }
+        return $productos;
+    }
+
+    public static function obtener_producto_id($conexion, $id_producto)
+    {
+        $productos = null;
+        if (isset($conexion)){
+            try {
+                $sql = "SELECT * FROM trybit.productos WHERE id_producto = :id_producto";
+
+                $setencia = $conexion->prepare($sql);
+                $setencia->bindParam(':id_producto', $id_producto, PDO::PARAM_STR);
+                $setencia->execute();
+                $resultado = $setencia->fetch();
+
+                if (!empty($resultado)) {
+                    $productos = new Productos($resultado['id_producto'], $resultado['NIT'], $resultado['id_contactos'], $resultado['nombre'], $resultado['referencia'], $resultado['descripcion'], $resultado['cantidad'], $resultado['precio'], $resultado['fecha_entrada'], $resultado['vencimiento']);
+                } else {
+                    $productos = new Productos("0", "0", "0", "0", "0", "0", "0", "0", "0", "0");
+                }
+            }catch (PDOException $ex) {
+                print 'ERROR' . $ex -> getMessage();
+            }
+        }
+        return $productos;
+    }
+
+    public static function Obtener_productos_seleccion($conexion, $NIT){
+        $productos = [];
+        if (isset($conexion)){
+            try {
+                $sql = "SELECT * FROM trybit.productos WHERE $NIT = :NIT";
+
+                $setencia = $conexion->prepare($sql);
+                $setencia->bindParam(':NIT', $NIT, PDO::PARAM_STR);
+                $setencia->execute();
+                $resultado = $setencia->fetchAll();
+
+                if (count($resultado)) {
+                    foreach ($resultado as $fila) {
+                        $productos[] = new Productos($fila['id_producto'], $fila['NIT'], $fila['id_contactos'], $fila['nombre'], $fila['referencia'], $fila['descripcion'], $fila['cantidad'], $fila['precio'], $fila['fecha_entrada'], $fila['vencimiento']);
+                    }
+                }
+            }catch (PDOException $ex) {
+                print 'ERROR' . $ex -> getMessage();
+            }
+        }
+        return $productos;
+    }
 }

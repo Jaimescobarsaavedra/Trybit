@@ -40,4 +40,29 @@ class RepoVentas{
         }
         return $venta_insertada;
     }
+
+    public static function Obtener_ventas_id($conexion, $NIT)
+    {
+        $ventas = [];
+        if (isset($conexion)){
+            try {
+                $sql = "SELECT * FROM trybit.ventas WHERE NIT = :NIT ";
+
+                $sentencia = $conexion->prepare($sql);
+                $sentencia -> bindParam(':NIT', $NIT, PDO::PARAM_STR);
+                $sentencia -> execute();
+                $resultado = $sentencia -> fetchAll();
+
+                if (count($resultado)){
+                    foreach ($resultado as $fila){
+                        $ventas[] = new Ventas($fila['id_venta'], $fila['NIT'], $fila['id_producto'], $fila['cantidad'], $fila['fecha'], $fila['total'], $fila['modo_pago'], $fila['estatus'], $fila['num_pago']);
+                    }
+                }
+
+            }catch (PDOException $ex){
+                print 'ERROR' . $ex->getMessage();
+            }
+        }
+        return $ventas;
+    }
 }
