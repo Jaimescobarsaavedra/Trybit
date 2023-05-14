@@ -13,7 +13,7 @@ include_once 'PLANTILLAS/Trybit/Default/HeadYMenu.inc.php';
         <h1>Agregar Elementos</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="<?php SERVIDOR?>">Home</a></li>
+                <li class="breadcrumb-item"><a href="<?php echo RUTA_TRYBIT ?>">Home</a></li>
                 <li class="breadcrumb-item">Agregar</li>
                 <li class="breadcrumb-item active">Contactos</li>
             </ol>

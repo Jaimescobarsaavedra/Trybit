@@ -16,6 +16,10 @@ include_once 'APP/RepoGastos.inc.php';
 include_once 'APP/RepoProductos.inc.php';
 include_once 'APP/RepoVentas.inc.php';
 include_once 'APP/RepoEscribirDatos.inc.php';
+include_once 'APP/RepoReportes.inc.php';
+include_once 'PLANTILLAS/Trybit/Default/MuestraGraficos.inc.php';
+require_once 'CSS/src/jpgraph.php';
+require_once 'CSS/src/jpgraph_line.php';
 
 conexion::abrir_conexion();
 if (isset($_POST['enviar_default'])){
@@ -82,7 +86,7 @@ elseif (isset($_POST['enviar_logout'])) {
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Registro</title>
+    <title>Trybit</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -296,9 +300,8 @@ elseif (isset($_POST['enviar_logout'])) {
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-
                     <li>
-                        <a class="dropdown-item d-flex align-items-center" href="<?php SERVIDOR?>">
+                        <a class="dropdown-item d-flex align-items-center" href="<?php  ?>">
                             <i class="bi bi-person"></i>
                             <span>Mi Perfil</span>
                         </a>

@@ -2,11 +2,12 @@
 include_once 'APP/ControlSesion.inc.php';
 include_once 'APP/Redireccion.inc.php';
 include_once 'APP/RepoEscribirDatos.inc.php';
+include_once 'APP/Gastos.class.php';
+
 if (!ControlSesion::sesion_iniciada()) {
     Redireccion::redirigir(RUTA_LOGIN);
 }
 include_once 'PLANTILLAS/Trybit/Default/HeadYMenu.inc.php';
-
 ?>
 <main id="main" class="main">
 
@@ -14,7 +15,7 @@ include_once 'PLANTILLAS/Trybit/Default/HeadYMenu.inc.php';
         <h1>Trybit</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="<?php SERVIDOR?>">Home</a></li>
+                <li class="breadcrumb-item"><a href="<?php echo RUTA_TRYBIT?>">Home</a></li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
@@ -53,7 +54,7 @@ include_once 'PLANTILLAS/Trybit/Default/HeadYMenu.inc.php';
                                         <i class="bi bi-cart"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6>200</h6>
+                                        <h6>$<?php  echo number_format(intval(RepoReportes::reporte_ventas_hoy(conexion::obtener_conexion(),$_SESSION['NIT'])), 0, ",", ".") ?></h6>
                                         <span class="text-success small pt-1 fw-bold">12%</span> <span
                                             class="text-muted small pt-2 ps-1">increase</span>
 
@@ -91,7 +92,7 @@ include_once 'PLANTILLAS/Trybit/Default/HeadYMenu.inc.php';
                                         <i class="bi bi-currency-dollar"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6>$3,264</h6>
+                                        <h6>$<?php  echo number_format(intval(RepoReportes::reporte_ganancias_hoy(conexion::obtener_conexion(),$_SESSION['NIT'])), 0, ",", ".") ?></h6>
                                         <span class="text-success small pt-1 fw-bold">8%</span> <span
                                             class="text-muted small pt-2 ps-1">Incremento</span>
 
@@ -114,13 +115,11 @@ include_once 'PLANTILLAS/Trybit/Default/HeadYMenu.inc.php';
                                     <li class="dropdown-header text-start">
                                         <h6>Filtro</h6>
                                     </li>
-
                                     <li><a class="dropdown-item" href="#">Hoy</a></li>
                                     <li><a class="dropdown-item" href="#">Este mes</a></li>
                                     <li><a class="dropdown-item" href="#">Este año</a></li>
                                 </ul>
                             </div>
-
                             <div class="card-body">
                                 <h5 class="card-title">Gastos <span>| Este año</span></h5>
 
@@ -130,7 +129,7 @@ include_once 'PLANTILLAS/Trybit/Default/HeadYMenu.inc.php';
                                         <i class="bi bi-people"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6>1244</h6>
+                                        <h6>$<?php  echo number_format(intval(RepoReportes::reporte_gastos_ano(conexion::obtener_conexion(),$_SESSION['NIT'])), 0, ",", ".") ?></h6>
                                         <span class="text-danger small pt-1 fw-bold">12%</span> <span
                                             class="text-muted small pt-2 ps-1">decrease</span>
 
@@ -148,10 +147,10 @@ include_once 'PLANTILLAS/Trybit/Default/HeadYMenu.inc.php';
 
                             <div class="filter">
                                 <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                        class="bi bi-three-dots"></i></a>
+                                            class="bi bi-three-dots"></i></a>
                                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                     <li class="dropdown-header text-start">
-                                        <h6>Filtro</h6>
+                                        <h6>Filtro tiempo</h6>
                                     </li>
 
                                     <li><a class="dropdown-item" href="#">Hoy</a></li>
@@ -161,23 +160,25 @@ include_once 'PLANTILLAS/Trybit/Default/HeadYMenu.inc.php';
                             </div>
 
                             <div class="card-body">
-                                <h5 class="card-title">Reportes <span>/Hoy</span></h5>
+                                <h5 class="card-title">Reportes Cantidad<span>/Hoy</span></h5>
 
                                 <!-- Line Chart -->
                                 <div id="reportsChart"></div>
+                                <div id="chart"></div>
+                                <?php
+
+                                ?>
+
 
                                 <script>
                                     document.addEventListener("DOMContentLoaded", () => {
                                         new ApexCharts(document.querySelector("#reportsChart"), {
                                             series: [{
                                                 name: 'Ventas',
-                                                data: [31, 40, 50, 51, 42, 82, 56],
-                                            }, {
-                                                name: 'Ganancias',
-                                                data: [11, 32, 45, 32, 34, 52, 41]
-                                            }, {
+                                                data: <?php echo RepoEscribirDatos::escribir_cantidad_producto_grafica_ventas() ?>
+                                            },{
                                                 name: 'Gastos',
-                                                data: [15, 11, 32, 18, 9, 24, 11]
+                                                data: <?php echo RepoEscribirDatos::escribir_cantidad_producto_grafica_compras() ?>
                                             }],
                                             chart: {
                                                 height: 350,
@@ -189,7 +190,7 @@ include_once 'PLANTILLAS/Trybit/Default/HeadYMenu.inc.php';
                                             markers: {
                                                 size: 4
                                             },
-                                            colors: ['#4154f1', '#2eca6a', '#ff771d'],
+                                            colors: ['#FA6C62','#7FFA8E'],
                                             fill: {
                                                 type: "gradient",
                                                 gradient: {
@@ -207,8 +208,84 @@ include_once 'PLANTILLAS/Trybit/Default/HeadYMenu.inc.php';
                                                 width: 2
                                             },
                                             xaxis: {
-                                                type: 'datetime',
-                                                categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
+                                                categories: <?php echo RepoEscribirDatos::escribir_cantidad_grafica_ventas() ?>
+                                            },
+                                            tooltip: {
+                                                x: {
+                                                    format: 'dd/MM/yy HH:mm'
+                                                },
+                                            }
+                                        }).render();
+                                    });
+                                </script>
+                                <!-- End Line Chart -->
+
+                            </div>
+
+                        </div>
+                    </div><!-- End Reports -->
+
+
+                    <!-- Reports -->
+                    <div class="col-12">
+                        <div class="card">
+
+                            <div class="filter">
+                                <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                        class="bi bi-three-dots"></i></a>
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                    <li class="dropdown-header text-start">
+                                        <h6>Filtro tiempo</h6>
+                                    </li>
+
+                                    <li><a class="dropdown-item" href="#">Hoy</a></li>
+                                    <li><a class="dropdown-item" href="#">Este mes</a></li>
+                                    <li><a class="dropdown-item" href="#">Este año</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="card-body">
+                                <h5 class="card-title">Reportes Cantidad Gastos<span>/Hoy</span></h5>
+
+                                <!-- Line Chart -->
+                                <div id="reportsChart"></div>
+
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", () => {
+                                        new ApexCharts(document.querySelector("#reportsChart"), {
+                                            series: [{
+                                                name: 'Gastos',
+                                                data: <?php echo RepoEscribirDatos::escribir_cuenta_grafica_gastos() ?>
+                                            }],
+                                            chart: {
+                                                height: 350,
+                                                type: 'area',
+                                                toolbar: {
+                                                    show: false
+                                                },
+                                            },
+                                            markers: {
+                                                size: 4
+                                            },
+                                            colors: ['#4154f1'],
+                                            fill: {
+                                                type: "gradient",
+                                                gradient: {
+                                                    shadeIntensity: 1,
+                                                    opacityFrom: 0.3,
+                                                    opacityTo: 0.4,
+                                                    stops: [0, 90, 100]
+                                                }
+                                            },
+                                            dataLabels: {
+                                                enabled: false
+                                            },
+                                            stroke: {
+                                                curve: 'smooth',
+                                                width: 2
+                                            },
+                                            xaxis: {
+                                                categories: <?php echo RepoEscribirDatos::escribir_categoria_grafica_gastos() ?>
                                             },
                                             tooltip: {
                                                 x: {

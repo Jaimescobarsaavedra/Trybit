@@ -118,6 +118,7 @@ CREATE TABLE contabilidad
     id_ventas VARCHAR(255) NOT NULL,
     ingresos INT(255) NOT NULL,
     egresos INT(255) NOT NULL,
+    fecha DATETIME NOT NULL,
     CONSTRAINT UN_id_contabilidad UNIQUE (id_contabilidad),
     PRIMARY KEY (id_contabilidad),
     FOREIGN KEY (NIT)

@@ -3,6 +3,7 @@ include_once 'APP/Contactos.class.php';
 include_once 'APP/Compras.class.php';
 include_once 'APP/Productos.class.php';
 include_once 'APP/RepoProductos.inc.php';
+include_once 'APP/RepoReportes.inc.php';
 include_once 'APP/RepoCompras.inc.php';
 include_once 'APP/RepoContactos.inc.php';
 
@@ -181,7 +182,6 @@ class RepoEscribirDatos{
         <option value="<?php echo $contacto->getIdContacto() ?>"><?php echo $contacto->getNombre() ?></option>
         <?php
     }
-
     public static function escribir_productos_seleccion(){
         $productos = RepoProductos::Obtener_productos_seleccion(conexion::obtener_conexion(), $_SESSION['NIT']);
         if (count($productos)) {
@@ -198,4 +198,65 @@ class RepoEscribirDatos{
         <option value="<?php echo $producto->getIdProducto() ?>"><?php echo $producto->getNombre() ?></option>
         <?php
     }
+    public static function escribir_categoria_grafica_gastos(){
+        $resultado = RepoReportes::reporte_categoria_gastos_ano(conexion::obtener_conexion(), $_SESSION['NIT']);
+        $array = [];
+        foreach ($resultado as $resultadito) {
+            $array[] = $resultadito["categoria"];
+        }
+        $json = json_encode($array);
+
+        return $json;
+    }
+    public static function escribir_cuenta_grafica_gastos(){
+        $resultado = RepoReportes::reporte_categoria_gastos_ano(conexion::obtener_conexion(), $_SESSION['NIT']);
+        $array = [];
+        foreach ($resultado as $resultadito) {
+            $array[] = $resultadito["num_gastos"];
+        }
+        $json = json_encode($array);
+
+        return $json;
+    }
+    public static function escribir_cantidad_grafica_ventas(){
+        $resultado = RepoReportes::reporte_cantidad_ventas_producto_ano(conexion::obtener_conexion(), $_SESSION['NIT']);
+        $array = [];
+        foreach ($resultado as $resultadito) {
+            $array[] = $resultadito["nombre"];
+        }
+        $json = json_encode($array);
+
+        return $json;
+    }
+    public static function escribir_cantidad_producto_grafica_ventas(){
+        $resultado = RepoReportes::reporte_cantidad_ventas_producto_ano(conexion::obtener_conexion(), $_SESSION['NIT']);
+        $array = [];
+        foreach ($resultado as $resultadito) {
+            $array[] = $resultadito["cant_producto"];
+        }
+        $json = json_encode($array);
+
+        return $json;
+    }
+    public static function escribir_cantidad_grafica_compras(){
+        $resultado = RepoReportes::reporte_cantidad_compras_producto_ano(conexion::obtener_conexion(), $_SESSION['NIT']);
+        $array = [];
+        foreach ($resultado as $resultadito) {
+            $array[] = $resultadito["nombre"];
+        }
+        $json = json_encode($array);
+
+        return $json;
+    }
+    public static function escribir_cantidad_producto_grafica_compras(){
+        $resultado = RepoReportes::reporte_cantidad_compras_producto_ano(conexion::obtener_conexion(), $_SESSION['NIT']);
+        $array = [];
+        foreach ($resultado as $resultadito) {
+            $array[] = $resultadito["cant_producto"];
+        }
+        $json = json_encode($array);
+
+        return $json;
+    }
+
 }
