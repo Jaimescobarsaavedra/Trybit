@@ -241,11 +241,11 @@ class RepoReportes{
         }
         return $Grafica_ano;
     }
-    public static function reporte_cantidad_ventas_producto_ano($conexion, $NIT){
+    public static function reporte_cantidad_ventas_producto_hoy($conexion, $NIT){
         $Grafica_ano = array();
         if (isset($conexion)){
             try {
-                $sql = "SELECT p.nombre, sum(c.cantidad) as cant_producto FROM trybit.ventas c JOIN trybit.productos p ON c.id_producto = p.id_producto WHERE YEAR(c.fecha) = YEAR(CURDATE()) AND c.NIT = :NIT GROUP BY p.id_producto";
+                $sql = "SELECT p.nombre, COALESCE(SUM(c.cantidad), 0) AS cant_producto FROM trybit.productos p LEFT JOIN trybit.ventas c ON c.id_producto = p.id_producto AND c.fecha >= CURDATE() AND c.NIT = :NIT GROUP BY p.nombre";
 
                 $sentencia = $conexion->prepare($sql);
                 $sentencia -> bindParam(':NIT', $NIT, PDO::PARAM_STR);
@@ -260,12 +260,87 @@ class RepoReportes{
         }
         return $Grafica_ano;
     }
+    public static function reporte_cantidad_ventas_producto_mes($conexion, $NIT){
+        $Grafica_ano = array();
+        if (isset($conexion)){
+            try {
+                $sql = "SELECT p.nombre, COALESCE(SUM(c.cantidad), 0) AS cant_producto FROM trybit.productos p LEFT JOIN trybit.ventas c ON c.id_producto = p.id_producto AND c.fecha >= MONTH(CURDATE()) AND c.NIT = :NIT GROUP BY p.nombre";
 
+                $sentencia = $conexion->prepare($sql);
+                $sentencia -> bindParam(':NIT', $NIT, PDO::PARAM_STR);
+                $sentencia -> execute();
+
+                while($row = $sentencia->fetch(PDO::FETCH_ASSOC)){
+                    $Grafica_ano[] = $row;
+                }
+            }catch (PDOException $ex){
+                print 'ERROR' . $ex->getMessage();
+            }
+        }
+        return $Grafica_ano;
+    }
+    public static function reporte_cantidad_ventas_producto_ano($conexion, $NIT){
+        $Grafica_ano = array();
+        if (isset($conexion)){
+            try {
+                $sql = "SELECT p.nombre, COALESCE(SUM(c.cantidad), 0) AS cant_producto FROM trybit.productos p LEFT JOIN trybit.ventas c ON c.id_producto = p.id_producto AND c.fecha >= YEAR(CURDATE()) AND c.NIT = :NIT GROUP BY p.nombre";
+
+                $sentencia = $conexion->prepare($sql);
+                $sentencia -> bindParam(':NIT', $NIT, PDO::PARAM_STR);
+                $sentencia -> execute();
+
+                while($row = $sentencia->fetch(PDO::FETCH_ASSOC)){
+                    $Grafica_ano[] = $row;
+                }
+            }catch (PDOException $ex){
+                print 'ERROR' . $ex->getMessage();
+            }
+        }
+        return $Grafica_ano;
+    }
+    public static function reporte_cantidad_compras_producto_hoy($conexion, $NIT){
+        $Grafica_ano = array();
+        if (isset($conexion)){
+            try {
+                $sql = "SELECT p.nombre, COALESCE(SUM(c.cantidad), 0) AS cant_producto FROM trybit.productos p LEFT JOIN trybit.compras c ON c.id_producto = p.id_producto AND c.fecha_compra >= CURDATE() AND c.NIT = :NIT GROUP BY p.nombre";
+
+                $sentencia = $conexion->prepare($sql);
+                $sentencia -> bindParam(':NIT', $NIT, PDO::PARAM_STR);
+                $sentencia -> execute();
+
+                while($row = $sentencia->fetch(PDO::FETCH_ASSOC)){
+                    $Grafica_ano[] = $row;
+                }
+            }catch (PDOException $ex){
+                print 'ERROR' . $ex->getMessage();
+            }
+        }
+        return $Grafica_ano;
+    }
+    public static function reporte_cantidad_compras_producto_mes($conexion, $NIT){
+        $Grafica_ano = array();
+        if (isset($conexion)){
+            try {
+                $sql = "SELECT p.nombre, COALESCE(SUM(c.cantidad), 0) AS cant_producto FROM trybit.productos p LEFT JOIN trybit.compras c ON c.id_producto = p.id_producto AND c.fecha_compra >= MONTH(CURDATE()) AND c.NIT = :NIT GROUP BY p.nombre";
+
+                $sentencia = $conexion->prepare($sql);
+                $sentencia -> bindParam(':NIT', $NIT, PDO::PARAM_STR);
+                $sentencia -> execute();
+
+                while($row = $sentencia->fetch(PDO::FETCH_ASSOC)){
+                    $Grafica_ano[] = $row;
+                }
+            }catch (PDOException $ex){
+                print 'ERROR' . $ex->getMessage();
+            }
+        }
+        return $Grafica_ano;
+    }
     public static function reporte_cantidad_compras_producto_ano($conexion, $NIT){
         $Grafica_ano = array();
         if (isset($conexion)){
             try {
-                $sql = "SELECT p.nombre, sum(c.cantidad) as cant_producto FROM trybit.compras c JOIN trybit.productos p ON c.id_producto = p.id_producto WHERE YEAR(c.fecha_compra) = YEAR(CURDATE()) AND c.NIT = :NIT GROUP BY p.id_producto";
+                $sql = "SELECT p.nombre, COALESCE(SUM(c.cantidad), 0) AS cant_producto FROM trybit.productos p LEFT JOIN trybit.compras c ON c.id_producto = p.id_producto AND c.fecha_compra >= YEAR(CURDATE()) AND c.NIT = :NIT GROUP BY p.nombre";
 
                 $sentencia = $conexion->prepare($sql);
                 $sentencia -> bindParam(':NIT', $NIT, PDO::PARAM_STR);

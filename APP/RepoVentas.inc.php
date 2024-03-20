@@ -69,4 +69,148 @@ class RepoVentas{
         }
         return $ventas;
     }
+    public static function Obtener_ultimas_ventas_id_hoy($conexion, $NIT)
+    {
+        $ventas = [];
+        if (isset($conexion)){
+            try {
+                $sql = "SELECT * FROM trybit.ventas WHERE NIT = :NIT ORDER BY fecha DESC LIMIT 5";
+
+                $sentencia = $conexion->prepare($sql);
+                $sentencia -> bindParam(':NIT', $NIT, PDO::PARAM_STR);
+                $sentencia -> execute();
+                $resultado = $sentencia -> fetchAll();
+
+                if (count($resultado)){
+                    foreach ($resultado as $fila){
+                        $ventas[] = new Ventas($fila['id_venta'], $fila['NIT'], $fila['id_producto'], $fila['cantidad'], $fila['fecha'], $fila['total'], $fila['modo_pago'], $fila['estatus'], $fila['num_pago']);
+                    }
+                }
+
+            }catch (PDOException $ex){
+                print 'ERROR' . $ex->getMessage();
+            }
+        }
+        return $ventas;
+    }
+    public static function Obtener_ultimas_ventas_id_mes($conexion, $NIT)
+    {
+        $ventas = [];
+        if (isset($conexion)){
+            try {
+                $sql = "SELECT * FROM trybit.ventas WHERE NIT = :NIT ORDER BY fecha DESC LIMIT 5";
+
+                $sentencia = $conexion->prepare($sql);
+                $sentencia -> bindParam(':NIT', $NIT, PDO::PARAM_STR);
+                $sentencia -> execute();
+                $resultado = $sentencia -> fetchAll();
+
+                if (count($resultado)){
+                    foreach ($resultado as $fila){
+                        $ventas[] = new Ventas($fila['id_venta'], $fila['NIT'], $fila['id_producto'], $fila['cantidad'], $fila['fecha'], $fila['total'], $fila['modo_pago'], $fila['estatus'], $fila['num_pago']);
+                    }
+                }
+
+            }catch (PDOException $ex){
+                print 'ERROR' . $ex->getMessage();
+            }
+        }
+        return $ventas;
+    }
+    public static function Obtener_ultimas_ventas_id_ano($conexion, $NIT)
+    {
+        $ventas = [];
+        if (isset($conexion)){
+            try {
+                $sql = "SELECT * FROM trybit.ventas WHERE NIT = :NIT ORDER BY fecha DESC LIMIT 5";
+
+                $sentencia = $conexion->prepare($sql);
+                $sentencia -> bindParam(':NIT', $NIT, PDO::PARAM_STR);
+                $sentencia -> execute();
+                $resultado = $sentencia -> fetchAll();
+
+                if (count($resultado)){
+                    foreach ($resultado as $fila){
+                        $ventas[] = new Ventas($fila['id_venta'], $fila['NIT'], $fila['id_producto'], $fila['cantidad'], $fila['fecha'], $fila['total'], $fila['modo_pago'], $fila['estatus'], $fila['num_pago']);
+                    }
+                }
+
+            }catch (PDOException $ex){
+                print 'ERROR' . $ex->getMessage();
+            }
+        }
+        return $ventas;
+    }
+    public static function Obtener_ventas_altas_id_hoy($conexion, $NIT)
+    {
+        $ventas = [];
+        if (isset($conexion)){
+            try {
+                $sql = "SELECT * FROM trybit.ventas WHERE NIT = :NIT ORDER BY cantidad DESC LIMIT 5";
+
+                $sentencia = $conexion->prepare($sql);
+                $sentencia -> bindParam(':NIT', $NIT, PDO::PARAM_STR);
+                $sentencia -> execute();
+                $resultado = $sentencia -> fetchAll();
+
+                if (count($resultado)){
+                    foreach ($resultado as $fila){
+                        $ventas[] = new Ventas($fila['id_venta'], $fila['NIT'], $fila['id_producto'], $fila['cantidad'], $fila['fecha'], $fila['total'], $fila['modo_pago'], $fila['estatus'], $fila['num_pago']);
+                    }
+                }
+
+            }catch (PDOException $ex){
+                print 'ERROR' . $ex->getMessage();
+            }
+        }
+        return $ventas;
+    }
+    public static function Obtener_ventas_altas_id_mes($conexion, $NIT)
+    {
+        $ventas = [];
+        if (isset($conexion)){
+            try {
+                $sql = "SELECT * FROM trybit.ventas WHERE NIT = :NIT ORDER BY cantidad DESC LIMIT 5";
+
+                $sentencia = $conexion->prepare($sql);
+                $sentencia -> bindParam(':NIT', $NIT, PDO::PARAM_STR);
+                $sentencia -> execute();
+                $resultado = $sentencia -> fetchAll();
+
+                if (count($resultado)){
+                    foreach ($resultado as $fila){
+                        $ventas[] = new Ventas($fila['id_venta'], $fila['NIT'], $fila['id_producto'], $fila['cantidad'], $fila['fecha'], $fila['total'], $fila['modo_pago'], $fila['estatus'], $fila['num_pago']);
+                    }
+                }
+
+            }catch (PDOException $ex){
+                print 'ERROR' . $ex->getMessage();
+            }
+        }
+        return $ventas;
+    }
+    public static function Obtener_ventas_altas_id_ano($conexion, $NIT)
+    {
+        $ventas = [];
+        if (isset($conexion)){
+            try {
+                $sql = "SELECT * FROM trybit.ventas WHERE NIT = :NIT ORDER BY cantidad DESC LIMIT 5";
+
+                $sentencia = $conexion->prepare($sql);
+                $sentencia -> bindParam(':NIT', $NIT, PDO::PARAM_STR);
+                $sentencia -> execute();
+                $resultado = $sentencia -> fetchAll();
+
+                if (count($resultado)){
+                    foreach ($resultado as $fila){
+                        $ventas[] = new Ventas($fila['id_venta'], $fila['NIT'], $fila['id_producto'], $fila['cantidad'], $fila['fecha'], $fila['total'], $fila['modo_pago'], $fila['estatus'], $fila['num_pago']);
+                    }
+                }
+
+            }catch (PDOException $ex){
+                print 'ERROR' . $ex->getMessage();
+            }
+        }
+        return $ventas;
+    }
 }

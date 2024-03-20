@@ -17,7 +17,6 @@ include_once 'APP/RepoProductos.inc.php';
 include_once 'APP/RepoVentas.inc.php';
 include_once 'APP/RepoEscribirDatos.inc.php';
 include_once 'APP/RepoReportes.inc.php';
-include_once 'PLANTILLAS/Trybit/Default/MuestraGraficos.inc.php';
 require_once 'CSS/src/jpgraph.php';
 require_once 'CSS/src/jpgraph_line.php';
 

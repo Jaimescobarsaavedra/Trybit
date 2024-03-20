@@ -8,6 +8,7 @@ if (!ControlSesion::sesion_iniciada()) {
     Redireccion::redirigir(RUTA_LOGIN);
 }
 include_once 'PLANTILLAS/Trybit/Default/HeadYMenu.inc.php';
+
 ?>
 <main id="main" class="main">
 
@@ -38,30 +39,49 @@ include_once 'PLANTILLAS/Trybit/Default/HeadYMenu.inc.php';
                                     <li class="dropdown-header text-start">
                                         <h6>Filtro</h6>
                                     </li>
-
-                                    <li><a class="dropdown-item" href="#">Hoy</a></li>
-                                    <li><a class="dropdown-item" href="#">Este mes</a></li>
-                                    <li><a class="dropdown-item" href="#">Este año</a></li>
+                                    <li><a id="ventasHoy" class="dropdown-item" href="#" onclick="filtrarVentas(this)">Hoy</a></li>
+                                    <li><a id="ventasMes" class="dropdown-item" href="#" onclick="filtrarVentas(this)">Este mes</a></li>
+                                    <li><a id="ventasAno" class="dropdown-item" href="#" onclick="filtrarVentas(this)">Este año</a></li>
                                 </ul>
                             </div>
-
-                            <div class="card-body">
-                                <h5 class="card-title">Ventas <span>| Hoy</span></h5>
-
+                            <?php
+                            $ventasHoy = RepoReportes::reporte_ventas_hoy(conexion::obtener_conexion(), $_SESSION['NIT']);
+                            $ventasMes = RepoReportes::reporte_ventas_mes(conexion::obtener_conexion(), $_SESSION['NIT']);
+                            $ventasAno = RepoReportes::reporte_ventas_ano(conexion::obtener_conexion(), $_SESSION['NIT']);
+                            ?>
+                            <div id="ventasHoyCard" style="display: block;" class="card-body">
+                                <h5 class="card-title">Ventas<span>| Hoy </span></h5>
                                 <div class="d-flex align-items-center">
-                                    <div
-                                        class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                         <i class="bi bi-cart"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6>$<?php  echo number_format(intval(RepoReportes::reporte_ventas_hoy(conexion::obtener_conexion(),$_SESSION['NIT'])), 0, ",", ".") ?></h6>
-                                        <span class="text-success small pt-1 fw-bold">12%</span> <span
-                                            class="text-muted small pt-2 ps-1">increase</span>
-
+                                        <h6>$ <?php echo number_format($ventasHoy, 0, ",", ".") ?></h6>
                                     </div>
                                 </div>
                             </div>
-
+                            <div id="ventasMesCard" style="display: none;" class="card-body">
+                                <h5 class="card-title">Ventas<span>| Este Mes </span></h5>
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-cart"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>$ <?php echo number_format($ventasMes, 0, ",", ".") ?></h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="ventasAnoCard" style="display: none;" class="card-body">
+                                <h5 class="card-title">Ventas<span>| Este Año </span></h5>
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-cart"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>$ <?php echo number_format($ventasAno, 0, ",", ".") ?></h6>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div><!-- End Sales Card -->
 
@@ -76,30 +96,49 @@ include_once 'PLANTILLAS/Trybit/Default/HeadYMenu.inc.php';
                                     <li class="dropdown-header text-start">
                                         <h6>Filtro</h6>
                                     </li>
-
-                                    <li><a class="dropdown-item" href="#">Hoy</a></li>
-                                    <li><a class="dropdown-item" href="#">Este mes</a></li>
-                                    <li><a class="dropdown-item" href="#">Este año</a></li>
+                                    <li><a id="gananciasHoy" class="dropdown-item" href="#" onclick="filtrarGanancias(this)">Hoy</a></li>
+                                    <li><a id="gananciasMes" class="dropdown-item" href="#" onclick="filtrarGanancias(this)">Este mes</a></li>
+                                    <li><a id="gananciasAno" class="dropdown-item" href="#" onclick="filtrarGanancias(this)">Este año</a></li>
                                 </ul>
                             </div>
-
-                            <div class="card-body">
-                                <h5 class="card-title">Ganancia <span>| Este mes</span></h5>
-
+                            <?php
+                            $gananciasHoy = RepoReportes::reporte_ganancias_hoy(conexion::obtener_conexion(), $_SESSION['NIT']);
+                            $gananciasMes = RepoReportes::reporte_ganancias_mes(conexion::obtener_conexion(), $_SESSION['NIT']);
+                            $gananciasAno = RepoReportes::reporte_ganancias_ano(conexion::obtener_conexion(), $_SESSION['NIT']);
+                            ?>
+                            <div id="gananciasHoyCard" style="display: block;" class="card-body">
+                                <h5 class="card-title">Ganancias<span>| Hoy </span></h5>
                                 <div class="d-flex align-items-center">
-                                    <div
-                                        class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="bi bi-currency-dollar"></i>
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-cart"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6>$<?php  echo number_format(intval(RepoReportes::reporte_ganancias_hoy(conexion::obtener_conexion(),$_SESSION['NIT'])), 0, ",", ".") ?></h6>
-                                        <span class="text-success small pt-1 fw-bold">8%</span> <span
-                                            class="text-muted small pt-2 ps-1">Incremento</span>
-
+                                        <h6>$ <?php echo number_format($gananciasHoy, 0, ",", ".") ?></h6>
                                     </div>
                                 </div>
                             </div>
-
+                            <div id="gananciasMesCard" style="display: none;" class="card-body">
+                                <h5 class="card-title">Ganancias<span>| Este Mes </span></h5>
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-cart"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>$ <?php echo number_format($gananciasMes, 0, ",", ".") ?></h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="gananciasAnoCard" style="display: none;" class="card-body">
+                                <h5 class="card-title">Ganancias<span>| Este Año </span></h5>
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-cart"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>$ <?php echo number_format($gananciasAno, 0, ",", ".") ?></h6>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div><!-- End Ganancias Card -->
 
@@ -115,27 +154,48 @@ include_once 'PLANTILLAS/Trybit/Default/HeadYMenu.inc.php';
                                     <li class="dropdown-header text-start">
                                         <h6>Filtro</h6>
                                     </li>
-                                    <li><a class="dropdown-item" href="#">Hoy</a></li>
-                                    <li><a class="dropdown-item" href="#">Este mes</a></li>
-                                    <li><a class="dropdown-item" href="#">Este año</a></li>
+                                    <li><a id="gastosHoy" class="dropdown-item" href="#" onclick="filtrarGastos(this)">Hoy</a></li>
+                                    <li><a id="gastosMes" class="dropdown-item" href="#" onclick="filtrarGastos(this)">Este mes</a></li>
+                                    <li><a id="gastosAno" class="dropdown-item" href="#" onclick="filtrarGastos(this)">Este año</a></li>
                                 </ul>
                             </div>
-                            <div class="card-body">
-                                <h5 class="card-title">Gastos <span>| Este año</span></h5>
-
+                            <?php
+                            $gastosHoy = RepoReportes::reporte_gastos_hoy(conexion::obtener_conexion(), $_SESSION['NIT']);
+                            $gastosMes = RepoReportes::reporte_gastos_mes(conexion::obtener_conexion(), $_SESSION['NIT']);
+                            $gastosAno = RepoReportes::reporte_gastos_ano(conexion::obtener_conexion(), $_SESSION['NIT']);
+                            ?>
+                            <div id="gastosHoyCard" style="display: block;" class="card-body">
+                                <h5 class="card-title">Gastos<span>| Hoy </span></h5>
                                 <div class="d-flex align-items-center">
-                                    <div
-                                        class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="bi bi-people"></i>
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-cart"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6>$<?php  echo number_format(intval(RepoReportes::reporte_gastos_ano(conexion::obtener_conexion(),$_SESSION['NIT'])), 0, ",", ".") ?></h6>
-                                        <span class="text-danger small pt-1 fw-bold">12%</span> <span
-                                            class="text-muted small pt-2 ps-1">decrease</span>
-
+                                        <h6>$ <?php echo number_format($gastosHoy, 0, ",", ".") ?></h6>
                                     </div>
                                 </div>
-
+                            </div>
+                            <div id="gastosMesCard" style="display: none;" class="card-body">
+                                <h5 class="card-title">Gastos<span>| Este Mes </span></h5>
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-cart"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>$ <?php echo number_format($gastosMes, 0, ",", ".") ?></h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="gastosAnoCard" style="display: none;" class="card-body">
+                                <h5 class="card-title">Gastos<span>| Este Año </span></h5>
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-cart"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>$ <?php echo number_format($gastosAno, 0, ",", ".") ?></h6>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -152,33 +212,36 @@ include_once 'PLANTILLAS/Trybit/Default/HeadYMenu.inc.php';
                                     <li class="dropdown-header text-start">
                                         <h6>Filtro tiempo</h6>
                                     </li>
-
-                                    <li><a class="dropdown-item" href="#">Hoy</a></li>
-                                    <li><a class="dropdown-item" href="#">Este mes</a></li>
-                                    <li><a class="dropdown-item" href="#">Este año</a></li>
+                                    <li><a id="grafica1Hoy" class="dropdown-item" href="#" onclick="filtrarGrafica1(this)">Hoy</a></li>
+                                    <li><a id="grafica1Mes" class="dropdown-item" href="#" onclick="filtrarGrafica1(this)">Este mes</a></li>
+                                    <li><a id="grafica1Ano" class="dropdown-item" href="#" onclick="filtrarGrafica1(this)">Este año</a></li>
                                 </ul>
                             </div>
 
-                            <div class="card-body">
+                            <?php
+                            $grafica1comprasHoy = RepoEscribirDatos::escribir_cantidad_producto_grafica_compras_hoy();
+                            $grafica1comprasMes = RepoEscribirDatos::escribir_cantidad_producto_grafica_compras_mes();
+                            $grafica1comprasAno = RepoEscribirDatos::escribir_cantidad_producto_grafica_compras_ano();
+                            $grafica1ventasHoy = RepoEscribirDatos::escribir_cantidad_producto_grafica_ventas_hoy();
+                            $grafica1ventasMes = RepoEscribirDatos::escribir_cantidad_producto_grafica_ventas_mes();
+                            $grafica1ventasAno = RepoEscribirDatos::escribir_cantidad_producto_grafica_ventas_ano();
+                            $grafica1Nombre = RepoEscribirDatos::escribir_producto_grafica_ventas_ano();
+                            ?>
+                            <div id="grafica1hoyCard" style="display: block;" class="card-body">
                                 <h5 class="card-title">Reportes Cantidad<span>/Hoy</span></h5>
 
                                 <!-- Line Chart -->
-                                <div id="reportsChart"></div>
+                                <div id="reportsChartHoy1"></div>
                                 <div id="chart"></div>
-                                <?php
-
-                                ?>
-
-
                                 <script>
                                     document.addEventListener("DOMContentLoaded", () => {
-                                        new ApexCharts(document.querySelector("#reportsChart"), {
+                                        new ApexCharts(document.querySelector("#reportsChartHoy1"), {
                                             series: [{
                                                 name: 'Ventas',
-                                                data: <?php echo RepoEscribirDatos::escribir_cantidad_producto_grafica_ventas() ?>
+                                                data: <?php echo $grafica1ventasHoy ?>
                                             },{
-                                                name: 'Gastos',
-                                                data: <?php echo RepoEscribirDatos::escribir_cantidad_producto_grafica_compras() ?>
+                                                name: 'Compras',
+                                                data: <?php echo $grafica1comprasHoy ?>
                                             }],
                                             chart: {
                                                 height: 350,
@@ -208,7 +271,121 @@ include_once 'PLANTILLAS/Trybit/Default/HeadYMenu.inc.php';
                                                 width: 2
                                             },
                                             xaxis: {
-                                                categories: <?php echo RepoEscribirDatos::escribir_cantidad_grafica_ventas() ?>
+                                                categories: <?php echo $grafica1Nombre ?>
+                                            },
+                                            tooltip: {
+                                                x: {
+                                                    format: 'dd/MM/yy HH:mm'
+                                                },
+                                            }
+                                        }).render();
+                                    });
+                                </script>
+                                <!-- End Line Chart -->
+
+                            </div>
+                            <div id="grafica1mesCard" style="display: none;" class="card-body">
+                                <h5 class="card-title">Reportes Cantidad<span>/Este Mes</span></h5>
+
+                                <!-- Line Chart -->
+                                <div id="reportsChartMes1"></div>
+                                <div id="chart"></div>
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", () => {
+                                        new ApexCharts(document.querySelector("#reportsChartMes1"), {
+                                            series: [{
+                                                name: 'Ventas',
+                                                data: <?php echo $grafica1ventasMes ?>
+                                            },{
+                                                name: 'Compras',
+                                                data: <?php echo $grafica1comprasMes ?>
+                                            }],
+                                            chart: {
+                                                height: 350,
+                                                type: 'area',
+                                                toolbar: {
+                                                    show: false
+                                                },
+                                            },
+                                            markers: {
+                                                size: 4
+                                            },
+                                            colors: ['#FA6C62','#7FFA8E'],
+                                            fill: {
+                                                type: "gradient",
+                                                gradient: {
+                                                    shadeIntensity: 1,
+                                                    opacityFrom: 0.3,
+                                                    opacityTo: 0.4,
+                                                    stops: [0, 90, 100]
+                                                }
+                                            },
+                                            dataLabels: {
+                                                enabled: false
+                                            },
+                                            stroke: {
+                                                curve: 'smooth',
+                                                width: 2
+                                            },
+                                            xaxis: {
+                                                categories: <?php echo $grafica1Nombre ?>
+                                            },
+                                            tooltip: {
+                                                x: {
+                                                    format: 'dd/MM/yy HH:mm'
+                                                },
+                                            }
+                                        }).render();
+                                    });
+                                </script>
+                                <!-- End Line Chart -->
+
+                            </div>
+                            <div id="grafica1anoCard" style="display: none;" class="card-body">
+                                <h5 class="card-title">Reportes Cantidad<span>/Este Año</span></h5>
+
+                                <!-- Line Chart -->
+                                <div id="reportsChartAno1"></div>
+                                <div id="chart"></div>
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", () => {
+                                        new ApexCharts(document.querySelector("#reportsChartAno1"), {
+                                            series: [{
+                                                name: 'Ventas',
+                                                data: <?php echo $grafica1ventasAno ?>
+                                            },{
+                                                name: 'Compras',
+                                                data: <?php echo $grafica1comprasAno ?>
+                                            }],
+                                            chart: {
+                                                height: 350,
+                                                type: 'area',
+                                                toolbar: {
+                                                    show: false
+                                                },
+                                            },
+                                            markers: {
+                                                size: 4
+                                            },
+                                            colors: ['#FA6C62','#7FFA8E'],
+                                            fill: {
+                                                type: "gradient",
+                                                gradient: {
+                                                    shadeIntensity: 1,
+                                                    opacityFrom: 0.3,
+                                                    opacityTo: 0.4,
+                                                    stops: [0, 90, 100]
+                                                }
+                                            },
+                                            dataLabels: {
+                                                enabled: false
+                                            },
+                                            stroke: {
+                                                curve: 'smooth',
+                                                width: 2
+                                            },
+                                            xaxis: {
+                                                categories: <?php echo $grafica1Nombre ?>
                                             },
                                             tooltip: {
                                                 x: {
@@ -237,25 +414,33 @@ include_once 'PLANTILLAS/Trybit/Default/HeadYMenu.inc.php';
                                     <li class="dropdown-header text-start">
                                         <h6>Filtro tiempo</h6>
                                     </li>
-
-                                    <li><a class="dropdown-item" href="#">Hoy</a></li>
-                                    <li><a class="dropdown-item" href="#">Este mes</a></li>
-                                    <li><a class="dropdown-item" href="#">Este año</a></li>
+                                    <li><a id="grafica2Hoy" class="dropdown-item" href="#" onclick="filtrarGrafica2(this)">Hoy</a></li>
+                                    <li><a id="grafica2Mes" class="dropdown-item" href="#" onclick="filtrarGrafica2(this)">Este mes</a></li>
+                                    <li><a id="grafica2Ano" class="dropdown-item" href="#" onclick="filtrarGrafica2(this)">Este año</a></li>
                                 </ul>
                             </div>
 
-                            <div class="card-body">
+                            <?php
+                            $grafica2gastosHoy = RepoEscribirDatos::escribir_cuenta_grafica_gastos_hoy();
+                            $grafica2gastosMes = RepoEscribirDatos::escribir_cuenta_grafica_gastos_mes();
+                            $grafica2gastosAno = RepoEscribirDatos::escribir_cuenta_grafica_gastos_ano();
+                            $grafica2nombreHoy = RepoEscribirDatos::escribir_categoria_grafica_gastos_hoy();
+                            $grafica2nombreMes = RepoEscribirDatos::escribir_categoria_grafica_gastos_mes();
+                            $grafica2nombreAno = RepoEscribirDatos::escribir_categoria_grafica_gastos_ano();
+
+                            ?>
+                            <div id="grafica2hoyCard" style="display: block;" class="card-body">
                                 <h5 class="card-title">Reportes Cantidad Gastos<span>/Hoy</span></h5>
 
                                 <!-- Line Chart -->
-                                <div id="reportsChart"></div>
+                                <div id="reportsChart2hoy"></div>
 
                                 <script>
                                     document.addEventListener("DOMContentLoaded", () => {
-                                        new ApexCharts(document.querySelector("#reportsChart"), {
+                                        new ApexCharts(document.querySelector("#reportsChart2hoy"), {
                                             series: [{
                                                 name: 'Gastos',
-                                                data: <?php echo RepoEscribirDatos::escribir_cuenta_grafica_gastos() ?>
+                                                data: <?php echo $grafica2gastosHoy ?>
                                             }],
                                             chart: {
                                                 height: 350,
@@ -285,7 +470,115 @@ include_once 'PLANTILLAS/Trybit/Default/HeadYMenu.inc.php';
                                                 width: 2
                                             },
                                             xaxis: {
-                                                categories: <?php echo RepoEscribirDatos::escribir_categoria_grafica_gastos() ?>
+                                                categories: <?php echo $grafica2nombreHoy ?>
+                                            },
+                                            tooltip: {
+                                                x: {
+                                                    format: 'dd/MM/yy HH:mm'
+                                                },
+                                            }
+                                        }).render();
+                                    });
+                                </script>
+                                <!-- End Line Chart -->
+
+                            </div>
+                            <div id="grafica2mesCard" style="display: none;" class="card-body">
+                                <h5 class="card-title">Reportes Cantidad Gastos<span>/Este Mes</span></h5>
+
+                                <!-- Line Chart -->
+                                <div id="reportsChart2mes"></div>
+
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", () => {
+                                        new ApexCharts(document.querySelector("#reportsChart2mes"), {
+                                            series: [{
+                                                name: 'Gastos',
+                                                data: <?php echo $grafica2gastosMes ?>
+                                            }],
+                                            chart: {
+                                                height: 350,
+                                                type: 'area',
+                                                toolbar: {
+                                                    show: false
+                                                },
+                                            },
+                                            markers: {
+                                                size: 4
+                                            },
+                                            colors: ['#4154f1'],
+                                            fill: {
+                                                type: "gradient",
+                                                gradient: {
+                                                    shadeIntensity: 1,
+                                                    opacityFrom: 0.3,
+                                                    opacityTo: 0.4,
+                                                    stops: [0, 90, 100]
+                                                }
+                                            },
+                                            dataLabels: {
+                                                enabled: false
+                                            },
+                                            stroke: {
+                                                curve: 'smooth',
+                                                width: 2
+                                            },
+                                            xaxis: {
+                                                categories: <?php echo $grafica2nombreMes ?>
+                                            },
+                                            tooltip: {
+                                                x: {
+                                                    format: 'dd/MM/yy HH:mm'
+                                                },
+                                            }
+                                        }).render();
+                                    });
+                                </script>
+                                <!-- End Line Chart -->
+
+                            </div>
+                            <div id="grafica2anoCard" style="display: none;" class="card-body">
+                                <h5 class="card-title">Reportes Cantidad Gastos<span>/Este Año</span></h5>
+
+                                <!-- Line Chart -->
+                                <div id="reportsChart2ano"></div>
+
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", () => {
+                                        new ApexCharts(document.querySelector("#reportsChart2ano"), {
+                                            series: [{
+                                                name: 'Gastos',
+                                                data: <?php echo $grafica2gastosAno ?>
+                                            }],
+                                            chart: {
+                                                height: 350,
+                                                type: 'area',
+                                                toolbar: {
+                                                    show: false
+                                                },
+                                            },
+                                            markers: {
+                                                size: 4
+                                            },
+                                            colors: ['#4154f1'],
+                                            fill: {
+                                                type: "gradient",
+                                                gradient: {
+                                                    shadeIntensity: 1,
+                                                    opacityFrom: 0.3,
+                                                    opacityTo: 0.4,
+                                                    stops: [0, 90, 100]
+                                                }
+                                            },
+                                            dataLabels: {
+                                                enabled: false
+                                            },
+                                            stroke: {
+                                                curve: 'smooth',
+                                                width: 2
+                                            },
+                                            xaxis: {
+                                                categories: <?php echo $grafica2nombreAno ?>
                                             },
                                             tooltip: {
                                                 x: {
@@ -313,63 +606,75 @@ include_once 'PLANTILLAS/Trybit/Default/HeadYMenu.inc.php';
                                     <li class="dropdown-header text-start">
                                         <h6>Filtro</h6>
                                     </li>
-
-                                    <li><a class="dropdown-item" href="#">Hoy</a></li>
-                                    <li><a class="dropdown-item" href="#">Este mes</a></li>
-                                    <li><a class="dropdown-item" href="#">Este año</a></li>
+                                    <li><a id="ventasRecientHoy" class="dropdown-item" href="#" onclick="filtrarVentasRecient(this)">Hoy</a></li>
+                                    <li><a id="ventasRecientMes" class="dropdown-item" href="#" onclick="filtrarVentasRecient(this)">Este mes</a></li>
+                                    <li><a id="ventasRecientAno" class="dropdown-item" href="#" onclick="filtrarVentasRecient(this)">Este año</a></li>
                                 </ul>
                             </div>
 
-                            <div class="card-body">
+                            <div id="ventasRecientHoyCard" style="display: block;" class="card-body">
                                 <h5 class="card-title">Ventas recientes <span>| Hoy</span></h5>
 
-                                <table class="table table-borderless datatable">
+                                <table class="table table-borderless">
                                     <thead>
                                     <tr>
-                                        <th scope="col">ID</th>
-                                        <th scope="col">Cliente</th>
+                                        <th scope="col">#</th>
                                         <th scope="col">Productos</th>
-                                        <th scope="col">Precio</th>
+                                        <th scope="col">Cantidad</th>
+                                        <th scope="col">Fecha</th>
+                                        <th scope="col">Total</th>
+                                        <th scope="col">Modo pago</th>
                                         <th scope="col">Estatus</th>
                                     </tr>
                                     </thead>
                                     <tbody>
+                                        <?php
+                                        RepoEscribirDatos::escribir_mis_ventas_recientes_hoy();
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div id="ventasRecientMesCard" style="display: none;" class="card-body">
+                                <h5 class="card-title">Ventas recientes <span>| Este Mes</span></h5>
+
+                                <table class="table table-borderless">
+                                    <thead>
                                     <tr>
-                                        <th scope="row"><a href="#">#2457</a></th>
-                                        <td>Brandon Jacob</td>
-                                        <td><a href="#" class="text-primary">At praesentium minu</a></td>
-                                        <td>$64</td>
-                                        <td><span class="badge bg-success">Approved</span></td>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Productos</th>
+                                        <th scope="col">Cantidad</th>
+                                        <th scope="col">Fecha</th>
+                                        <th scope="col">Total</th>
+                                        <th scope="col">Modo pago</th>
+                                        <th scope="col">Estatus</th>
                                     </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php
+                                    RepoEscribirDatos::escribir_mis_ventas_recientes_mes();
+                                    ?>
+                                    </tbody>
+                                </table>
+
+                            </div><div id="ventasRecientAnoCard" style="display: none;" class="card-body">
+                                <h5 class="card-title">Ventas recientes <span>| Este Año</span></h5>
+
+                                <table class="table table-borderless">
+                                    <thead>
                                     <tr>
-                                        <th scope="row"><a href="#">#2147</a></th>
-                                        <td>Bridie Kessler</td>
-                                        <td><a href="#" class="text-primary">Blanditiis dolor omnis
-                                                similique</a></td>
-                                        <td>$47</td>
-                                        <td><span class="badge bg-warning">Pending</span></td>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Productos</th>
+                                        <th scope="col">Cantidad</th>
+                                        <th scope="col">Fecha</th>
+                                        <th scope="col">Total</th>
+                                        <th scope="col">Modo pago</th>
+                                        <th scope="col">Estatus</th>
                                     </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#">#2049</a></th>
-                                        <td>Ashleigh Langosh</td>
-                                        <td><a href="#" class="text-primary">At recusandae consectetur</a></td>
-                                        <td>$147</td>
-                                        <td><span class="badge bg-success">Approved</span></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#">#2644</a></th>
-                                        <td>Angus Grady</td>
-                                        <td><a href="#" class="text-primar">Ut voluptatem id earum et</a></td>
-                                        <td>$67</td>
-                                        <td><span class="badge bg-danger">Rejected</span></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#">#2644</a></th>
-                                        <td>Raheem Lehner</td>
-                                        <td><a href="#" class="text-primary">Sunt similique distinctio</a></td>
-                                        <td>$165</td>
-                                        <td><span class="badge bg-success">Approved</span></td>
-                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php
+                                    RepoEscribirDatos::escribir_mis_ventas_recientes_ano();
+                                    ?>
                                     </tbody>
                                 </table>
 
@@ -383,78 +688,82 @@ include_once 'PLANTILLAS/Trybit/Default/HeadYMenu.inc.php';
                         <div class="card top-selling overflow-auto">
 
                             <div class="filter">
-                                <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                        class="bi bi-three-dots"></i></a>
+                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                     <li class="dropdown-header text-start">
                                         <h6>Filtro</h6>
                                     </li>
-
-                                    <li><a class="dropdown-item" href="#">Hoy</a></li>
-                                    <li><a class="dropdown-item" href="#">Este mes</a></li>
-                                    <li><a class="dropdown-item" href="#">Este año</a></li>
+                                    <li><a id="ventasAltasHoy" class="dropdown-item" href="#" onclick="filtrarVentasAltas(this)">Hoy</a></li>
+                                    <li><a id="ventasAltasMes" class="dropdown-item" href="#" onclick="filtrarVentasAltas(this)">Este mes</a></li>
+                                    <li><a id="ventasAltasHoy" class="dropdown-item" href="#" onclick="filtrarVentasAltas(this)">Este año</a></li>
                                 </ul>
                             </div>
 
-                            <div class="card-body pb-0">
-                                <h5 class="card-title">Top Selling <span>| Hoy</span></h5>
+                            <div id="ventasAltasHoyCard" style="display: block;" class="card-body pb-0">
+                                <h5 class="card-title">Top ventas <span>| Hoy</span></h5>
 
                                 <table class="table table-borderless">
                                     <thead>
                                     <tr>
-                                        <th scope="col">Preview</th>
-                                        <th scope="col">Product</th>
-                                        <th scope="col">Price</th>
-                                        <th scope="col">Sold</th>
-                                        <th scope="col">Ganancias</th>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Productos</th>
+                                        <th scope="col">Cantidad</th>
+                                        <th scope="col">Fecha</th>
+                                        <th scope="col">Total</th>
+                                        <th scope="col">Modo pago</th>
+                                        <th scope="col">Estatus</th>
                                     </tr>
                                     </thead>
                                     <tbody>
+                                    <?php
+                                    RepoEscribirDatos::escribir_mis_ventas_altas_hoy();
+                                    ?>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                            <div id="ventasAltasMesCard" style="display: none;" class="card-body pb-0">
+                                <h5 class="card-title">Top ventas <span>| Este Mes</span></h5>
+
+                                <table class="table table-borderless">
+                                    <thead>
                                     <tr>
-                                        <th scope="row"><a href="#"><img src="assets/img/product-1.jpg"
-                                                                         alt=""></a></th>
-                                        <td><a href="#" class="text-primary fw-bold">Ut inventore ipsa voluptas
-                                                nulla</a></td>
-                                        <td>$64</td>
-                                        <td class="fw-bold">124</td>
-                                        <td>$5,828</td>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Productos</th>
+                                        <th scope="col">Cantidad</th>
+                                        <th scope="col">Fecha</th>
+                                        <th scope="col">Total</th>
+                                        <th scope="col">Modo pago</th>
+                                        <th scope="col">Estatus</th>
                                     </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php
+                                    RepoEscribirDatos::escribir_mis_ventas_altas_mes();
+                                    ?>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                            <div id="ventasAltasAnoCard" style="display: none;" class="card-body pb-0">
+                                <h5 class="card-title">Top ventas <span>| Este Año</span></h5>
+
+                                <table class="table table-borderless">
+                                    <thead>
                                     <tr>
-                                        <th scope="row"><a href="#"><img src="assets/img/product-2.jpg"
-                                                                         alt=""></a></th>
-                                        <td><a href="#" class="text-primary fw-bold">Exercitationem similique
-                                                doloremque</a></td>
-                                        <td>$46</td>
-                                        <td class="fw-bold">98</td>
-                                        <td>$4,508</td>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Productos</th>
+                                        <th scope="col">Cantidad</th>
+                                        <th scope="col">Fecha</th>
+                                        <th scope="col">Total</th>
+                                        <th scope="col">Modo pago</th>
+                                        <th scope="col">Estatus</th>
                                     </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#"><img src="assets/img/product-3.jpg"
-                                                                         alt=""></a></th>
-                                        <td><a href="#" class="text-primary fw-bold">Doloribus nisi
-                                                exercitationem</a></td>
-                                        <td>$59</td>
-                                        <td class="fw-bold">74</td>
-                                        <td>$4,366</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#"><img src="assets/img/product-4.jpg"
-                                                                         alt=""></a></th>
-                                        <td><a href="#" class="text-primary fw-bold">Officiis quaerat sint rerum
-                                                error</a></td>
-                                        <td>$32</td>
-                                        <td class="fw-bold">63</td>
-                                        <td>$2,016</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#"><img src="assets/img/product-5.jpg"
-                                                                         alt=""></a></th>
-                                        <td><a href="#" class="text-primary fw-bold">Sit unde debitis delectus
-                                                repellendus</a></td>
-                                        <td>$79</td>
-                                        <td class="fw-bold">41</td>
-                                        <td>$3,239</td>
-                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php
+                                    RepoEscribirDatos::escribir_mis_ventas_altas_ano();
+                                    ?>
                                     </tbody>
                                 </table>
 
@@ -477,10 +786,9 @@ include_once 'PLANTILLAS/Trybit/Default/HeadYMenu.inc.php';
                             <li class="dropdown-header text-start">
                                 <h6>Filtro</h6>
                             </li>
-
-                            <li><a class="dropdown-item" href="#">Hoy</a></li>
-                            <li><a class="dropdown-item" href="#">Este mes</a></li>
-                            <li><a class="dropdown-item" href="#">Este año</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="guardarSeleccion('Hoy', 'ActReciente')">Hoy</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="guardarSeleccion('Mes', 'ActReciente')">Este mes</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="guardarSeleccion('Año', 'ActReciente')">Este año</a></li>
                         </ul>
                     </div>
 
@@ -552,10 +860,9 @@ include_once 'PLANTILLAS/Trybit/Default/HeadYMenu.inc.php';
                             <li class="dropdown-header text-start">
                                 <h6>Filtro</h6>
                             </li>
-
-                            <li><a class="dropdown-item" href="#">Hoy</a></li>
-                            <li><a class="dropdown-item" href="#">Este mes</a></li>
-                            <li><a class="dropdown-item" href="#">Este año</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="guardarSeleccion('Hoy', 'Repo')">Hoy</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="guardarSeleccion('Mes', '')">Este mes</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="guardarSeleccion('Año', '')">Este año</a></li>
                         </ul>
                     </div>
 
@@ -626,10 +933,9 @@ include_once 'PLANTILLAS/Trybit/Default/HeadYMenu.inc.php';
                             <li class="dropdown-header text-start">
                                 <h6>Filtro</h6>
                             </li>
-
-                            <li><a class="dropdown-item" href="#">Hoy</a></li>
-                            <li><a class="dropdown-item" href="#">Este mes</a></li>
-                            <li><a class="dropdown-item" href="#">Este año</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="guardarSeleccion('Hoy', '')">Hoy</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="guardarSeleccion('Mes', '')">Este mes</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="guardarSeleccion('Año', '')">Este año</a></li>
                         </ul>
                     </div>
 
@@ -695,65 +1001,7 @@ include_once 'PLANTILLAS/Trybit/Default/HeadYMenu.inc.php';
 
                     </div>
                 </div><!-- End Website Traffic -->
-
-                <!-- News & Updates Traffic -->
-                <div class="card">
-                    <div class="filter">
-                        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                            <li class="dropdown-header text-start">
-                                <h6>Filtro</h6>
-                            </li>
-
-                            <li><a class="dropdown-item" href="#">Hoy</a></li>
-                            <li><a class="dropdown-item" href="#">Este mes</a></li>
-                            <li><a class="dropdown-item" href="#">Este año</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="card-body pb-0">
-                        <h5 class="card-title">News &amp; Updates <span>| Hoy</span></h5>
-
-                        <div class="news">
-                            <div class="post-item clearfix">
-                                <img src="assets/img/news-1.jpg" alt="">
-                                <h4><a href="#">Nihil blanditiis at in nihil autem</a></h4>
-                                <p>Sit recusandae non aspernatur laboriosam. Quia enim eligendi sed ut harum...</p>
-                            </div>
-
-                            <div class="post-item clearfix">
-                                <img src="assets/img/news-2.jpg" alt="">
-                                <h4><a href="#">Quidem autem et impedit</a></h4>
-                                <p>Illo nemo neque maiores vitae officiis cum eum turos elan dries werona nande...
-                                </p>
-                            </div>
-
-                            <div class="post-item clearfix">
-                                <img src="assets/img/news-3.jpg" alt="">
-                                <h4><a href="#">Id quia et et ut maxime similique occaecati ut</a></h4>
-                                <p>Fugiat voluptas vero eaque accusantium eos. Consequuntur sed ipsam et totam...
-                                </p>
-                            </div>
-
-                            <div class="post-item clearfix">
-                                <img src="assets/img/news-4.jpg" alt="">
-                                <h4><a href="#">Laborum corporis quo dara net para</a></h4>
-                                <p>Qui enim quia optio. Eligendi aut asperiores enim repellendusvel rerum cuder...
-                                </p>
-                            </div>
-
-                            <div class="post-item clearfix">
-                                <img src="assets/img/news-5.jpg" alt="">
-                                <h4><a href="#">Et dolores corrupti quae illo quod dolor</a></h4>
-                                <p>Odit ut eveniet modi reiciendis. Atque cupiditate libero beatae dignissimos
-                                    eius...</p>
-                            </div>
-
-                        </div><!-- End sidebar recent posts-->
-
-                    </div>
-                </div><!-- End News & Updates -->
-
+                
             </div><!-- End Right side columns -->
 
         </div>

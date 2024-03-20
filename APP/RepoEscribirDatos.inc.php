@@ -164,6 +164,119 @@ class RepoEscribirDatos{
         </tr>
         <?php
     }
+    public static function escribir_mis_ventas_recientes_hoy()
+    {
+        $i = 1;
+        $ventas = RepoVentas::Obtener_ultimas_ventas_id_hoy(conexion::obtener_conexion(), $_SESSION['NIT']);
+        if (count($ventas)) {
+            foreach ($ventas as $venta) {
+                $indice = $i;
+                self::escribir_mi_venta_reciente($venta, $indice);
+                $i++;
+            }
+        }
+    }
+    public static function escribir_mis_ventas_recientes_mes()
+    {
+        $i = 1;
+        $ventas = RepoVentas::Obtener_ultimas_ventas_id_mes(conexion::obtener_conexion(), $_SESSION['NIT']);
+        if (count($ventas)) {
+            foreach ($ventas as $venta) {
+                $indice = $i;
+                self::escribir_mi_venta_reciente($venta, $indice);
+                $i++;
+            }
+        }
+    }
+    public static function escribir_mis_ventas_recientes_ano()
+    {
+        $i = 1;
+        $ventas = RepoVentas::Obtener_ultimas_ventas_id_ano(conexion::obtener_conexion(), $_SESSION['NIT']);
+        if (count($ventas)) {
+            foreach ($ventas as $venta) {
+                $indice = $i;
+                self::escribir_mi_venta_reciente($venta, $indice);
+                $i++;
+            }
+        }
+    }
+
+    public static function escribir_mi_venta_reciente($venta, $indice)
+    {
+        if (!isset($venta)) {
+            return;
+        }
+
+        $producto = RepoProductos::obtener_producto_id(conexion::obtener_conexion(), $venta-> getIdProducto());
+
+        ?>
+        <tr class="trbody">
+            <td><?php echo $indice ?></td>
+            <td><?php echo $producto -> getNombre() ?></td>
+            <td><?php echo $venta -> getCantidad() ?></td>
+            <td><?php echo $venta -> getFecha() ?></td>
+            <td>$<?php echo number_format(intval($venta -> getTotal()), 0, ",", ".")  ?></td>
+            <td><?php echo $venta -> getModoPago() ?></td>
+            <td><?php echo $venta -> getEstatus() ?></td>
+        </tr>
+        <?php
+    }
+    public static function escribir_mis_ventas_altas_hoy()
+    {
+        $i = 1;
+        $ventas = RepoVentas::Obtener_ventas_altas_id_hoy(conexion::obtener_conexion(), $_SESSION['NIT']);
+        if (count($ventas)) {
+            foreach ($ventas as $venta) {
+                $indice = $i;
+                self::escribir_mi_venta_alta($venta, $indice);
+                $i++;
+            }
+        }
+    }
+    public static function escribir_mis_ventas_altas_mes()
+    {
+        $i = 1;
+        $ventas = RepoVentas::Obtener_ventas_altas_id_mes(conexion::obtener_conexion(), $_SESSION['NIT']);
+        if (count($ventas)) {
+            foreach ($ventas as $venta) {
+                $indice = $i;
+                self::escribir_mi_venta_alta($venta, $indice);
+                $i++;
+            }
+        }
+    }
+    public static function escribir_mis_ventas_altas_ano()
+    {
+        $i = 1;
+        $ventas = RepoVentas::Obtener_ventas_altas_id_ano(conexion::obtener_conexion(), $_SESSION['NIT']);
+        if (count($ventas)) {
+            foreach ($ventas as $venta) {
+                $indice = $i;
+                self::escribir_mi_venta_alta($venta, $indice);
+                $i++;
+            }
+        }
+    }
+    public static function escribir_mi_venta_alta($venta, $indice)
+    {
+        if (!isset($venta)) {
+            return;
+        }
+
+        $producto = RepoProductos::obtener_producto_id(conexion::obtener_conexion(), $venta-> getIdProducto());
+
+        ?>
+        <tr class="trbody">
+            <td><?php echo $indice ?></td>
+            <td><?php echo $producto -> getNombre() ?></td>
+            <td><?php echo $venta -> getCantidad() ?></td>
+            <td><?php echo $venta -> getFecha() ?></td>
+            <td>$<?php echo number_format(intval($venta -> getTotal()), 0, ",", ".")  ?></td>
+            <td><?php echo $venta -> getModoPago() ?></td>
+            <td><?php echo $venta -> getEstatus() ?></td>
+        </tr>
+        <?php
+    }
 
     public static function escribir_contactos_seleccion(){
         $contactos = RepoContactos::Obtener_contactos_seleccion(Conexion::obtener_conexion(), $_SESSION['NIT']);
@@ -198,7 +311,27 @@ class RepoEscribirDatos{
         <option value="<?php echo $producto->getIdProducto() ?>"><?php echo $producto->getNombre() ?></option>
         <?php
     }
-    public static function escribir_categoria_grafica_gastos(){
+    public static function escribir_categoria_grafica_gastos_hoy(){
+        $resultado = RepoReportes::reporte_categoria_gastos_hoy(conexion::obtener_conexion(), $_SESSION['NIT']);
+        $array = [];
+        foreach ($resultado as $resultadito) {
+            $array[] = $resultadito["categoria"];
+        }
+        $json = json_encode($array);
+
+        return $json;
+    }
+    public static function escribir_categoria_grafica_gastos_mes(){
+        $resultado = RepoReportes::reporte_categoria_gastos_mes(conexion::obtener_conexion(), $_SESSION['NIT']);
+        $array = [];
+        foreach ($resultado as $resultadito) {
+            $array[] = $resultadito["categoria"];
+        }
+        $json = json_encode($array);
+
+        return $json;
+    }
+    public static function escribir_categoria_grafica_gastos_ano(){
         $resultado = RepoReportes::reporte_categoria_gastos_ano(conexion::obtener_conexion(), $_SESSION['NIT']);
         $array = [];
         foreach ($resultado as $resultadito) {
@@ -208,7 +341,27 @@ class RepoEscribirDatos{
 
         return $json;
     }
-    public static function escribir_cuenta_grafica_gastos(){
+    public static function escribir_cuenta_grafica_gastos_hoy(){
+        $resultado = RepoReportes::reporte_categoria_gastos_hoy(conexion::obtener_conexion(), $_SESSION['NIT']);
+        $array = [];
+        foreach ($resultado as $resultadito) {
+            $array[] = $resultadito["num_gastos"];
+        }
+        $json = json_encode($array);
+
+        return $json;
+    }
+    public static function escribir_cuenta_grafica_gastos_mes(){
+        $resultado = RepoReportes::reporte_categoria_gastos_mes(conexion::obtener_conexion(), $_SESSION['NIT']);
+        $array = [];
+        foreach ($resultado as $resultadito) {
+            $array[] = $resultadito["num_gastos"];
+        }
+        $json = json_encode($array);
+
+        return $json;
+    }
+    public static function escribir_cuenta_grafica_gastos_ano(){
         $resultado = RepoReportes::reporte_categoria_gastos_ano(conexion::obtener_conexion(), $_SESSION['NIT']);
         $array = [];
         foreach ($resultado as $resultadito) {
@@ -218,7 +371,7 @@ class RepoEscribirDatos{
 
         return $json;
     }
-    public static function escribir_cantidad_grafica_ventas(){
+    public static function escribir_producto_grafica_ventas_ano(){
         $resultado = RepoReportes::reporte_cantidad_ventas_producto_ano(conexion::obtener_conexion(), $_SESSION['NIT']);
         $array = [];
         foreach ($resultado as $resultadito) {
@@ -228,7 +381,27 @@ class RepoEscribirDatos{
 
         return $json;
     }
-    public static function escribir_cantidad_producto_grafica_ventas(){
+    public static function escribir_cantidad_producto_grafica_ventas_hoy(){
+        $resultado = RepoReportes::reporte_cantidad_ventas_producto_hoy(conexion::obtener_conexion(), $_SESSION['NIT']);
+        $array = [];
+        foreach ($resultado as $resultadito) {
+            $array[] = $resultadito["cant_producto"];
+        }
+        $json = json_encode($array);
+
+        return $json;
+    }
+    public static function escribir_cantidad_producto_grafica_ventas_mes(){
+        $resultado = RepoReportes::reporte_cantidad_ventas_producto_mes(conexion::obtener_conexion(), $_SESSION['NIT']);
+        $array = [];
+        foreach ($resultado as $resultadito) {
+            $array[] = $resultadito["cant_producto"];
+        }
+        $json = json_encode($array);
+
+        return $json;
+    }
+    public static function escribir_cantidad_producto_grafica_ventas_ano(){
         $resultado = RepoReportes::reporte_cantidad_ventas_producto_ano(conexion::obtener_conexion(), $_SESSION['NIT']);
         $array = [];
         foreach ($resultado as $resultadito) {
@@ -238,17 +411,27 @@ class RepoEscribirDatos{
 
         return $json;
     }
-    public static function escribir_cantidad_grafica_compras(){
-        $resultado = RepoReportes::reporte_cantidad_compras_producto_ano(conexion::obtener_conexion(), $_SESSION['NIT']);
+    public static function escribir_cantidad_producto_grafica_compras_hoy(){
+        $resultado = RepoReportes::reporte_cantidad_compras_producto_hoy(conexion::obtener_conexion(), $_SESSION['NIT']);
         $array = [];
         foreach ($resultado as $resultadito) {
-            $array[] = $resultadito["nombre"];
+            $array[] = $resultadito["cant_producto"];
         }
         $json = json_encode($array);
 
         return $json;
     }
-    public static function escribir_cantidad_producto_grafica_compras(){
+    public static function escribir_cantidad_producto_grafica_compras_mes(){
+        $resultado = RepoReportes::reporte_cantidad_compras_producto_mes(conexion::obtener_conexion(), $_SESSION['NIT']);
+        $array = [];
+        foreach ($resultado as $resultadito) {
+            $array[] = $resultadito["cant_producto"];
+        }
+        $json = json_encode($array);
+
+        return $json;
+    }
+    public static function escribir_cantidad_producto_grafica_compras_ano(){
         $resultado = RepoReportes::reporte_cantidad_compras_producto_ano(conexion::obtener_conexion(), $_SESSION['NIT']);
         $array = [];
         foreach ($resultado as $resultadito) {
